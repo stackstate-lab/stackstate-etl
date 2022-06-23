@@ -1,0 +1,122 @@
+[tool.poetry]
+name = "stackstate-etl"
+version = "0.1.0"
+description = "StackState Extract-Transform-Load Framework for 4T data ingestion"
+authors = ["Ravan Naidoo <rnaidoo@stackstate.com>"]
+build = "build.py"
+
+[tool.poetry.scripts]
+stsetl = "stackstate_etl.cli.main:main"
+
+[tool.poetry.dependencies]
+python = ">=2.7,<3.0.0 || >=3.7.0"
+asteval = "=0.9.17"
+PyYAML = "=5.4.1"
+schematics = "^2.1.1"
+pytz = "^2022.1"
+requests = "=2.25.0"
+six = "^1.16.0"
+pydash = "=4.9.3"
+pandas ="=0.24.2"
+importlib-resources = "=3.3.1"
+jsonpath-ng = "^1.5.3"
+attrs = "^21.4.0"
+click = "<8.0"
+
+[tool.poetry.dev-dependencies]
+pytest = {version = "^7.1.2", python = "^3.7"}
+black = {version = "=21.12b0", python = "^3.7"}
+mypy = {version = "^0.961", python = "^3.7"}
+flakehell = {version = "^0.9.0", python = "^3.7"}
+flake8 = {version = "^3.9.2", python = "^3.7"}
+isort = {version = "^5.10.1", python = "^3.7"}
+py-backwards = "^0.7"
+
+[tool.black]
+line-length = 120
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.flakehell]
+exclude = ["README.rst", "README.md", ".eggs", ".tox", "build",".venv", ".agent"]
+include = ["src", "tests"]
+format = "colored"
+max_line_length = 120
+show_source = true
+# Temp fix until issue is fixed https://github.com/flakehell/flakehell/issues/10
+extended_default_ignore=[]
+
+[tool.flakehell.plugins]
+"*" = [
+    "+*",
+    "-E203",
+]
+
+[tool.mypy]
+python_version = 3.7
+namespace_packages = true
+explicit_package_bases = true
+exclude = [
+    '.*test_explore_apis\.py'
+]
+
+
+[[tool.mypy.overrides]]
+module = "schematics.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "jsonpath_ng.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "asteval.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pydash.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "urllib3.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pytz.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "requests.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "six.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "yaml.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pandas.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "click.*"
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,12 @@
+/.idea/
+/.venv/
+/build/
+/dist/
+
+_pycache__/
+*.py[cod]
+*$py.class
+
+.python-version
+.mypy_cache/
+
