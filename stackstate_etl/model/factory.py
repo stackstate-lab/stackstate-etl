@@ -49,9 +49,17 @@ class TopologyFactory:
     def add_component(self, component: Component):
         if component is None:
             raise Exception("Component cannot be None.")
+        existing_component = self.components.get(component.uid, None)
+        if existing_component is not None:
+            if component.mergeable:
+                existing_component.merge(component)
+                component = existing_component
+            elif existing_component.mergeable:
+                component.merge(existing_component)
+            else:
+                raise Exception(f"Component '{component.uid}' already exists. No merge flags indicated.")
+
         component.validate()
-        if component.uid in self.components:
-            raise Exception(f"Component '{component.uid}' already exists.")
         self.components[component.uid] = component
 
     def get_component(self, uid: str) -> Component:

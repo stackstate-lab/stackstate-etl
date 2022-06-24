@@ -55,6 +55,7 @@ class BaseInterpreter:
         code = code.strip()
         if code.startswith("|"):
             code = code[1:]
+        self._update_asteval_symtable()
         value = self._eval_expression(code, property_name)
         return value
 
@@ -348,12 +349,12 @@ class ComponentTemplateInterpreter(BaseTemplateInterpreter):
         if component.uid is None:
             raise Exception(f"Component uid is required on template" f" `{self.template_name}.")
         self._run_code(spec.processor, "processor")
-        component.uid = self._get_string_property(spec.uid, "uid", None)
+        component.mergeable = spec.mergeable
 
-        component.properties.identifiers.extend(self._merge_list_property(spec.labels, "identifiers"))
+        component.properties.identifiers.extend(self._merge_list_property(spec.identifiers, "identifiers"))
         component.properties.identifiers.append(component.uid)
-        self.ctx.factory.add_component(component)
         self.ctx.factory.add_component_relations(component, self._get_list_property(spec.relations, "relations", []))
+        self.ctx.factory.add_component(component)
         return component
 
     def _interpret_code(self, code: str) -> Component:

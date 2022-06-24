@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Union
 
 from schematics import Model
-from schematics.types import (DictType, ListType, ModelType, StringType,
+from schematics.types import (BooleanType, DictType, ListType, ModelType, StringType,
                               UnionType)
 
 from stackstate_etl.model.stackstate import EVENT_CATEGORY_CHOICES, AnyType
@@ -32,6 +32,7 @@ class ComponentTemplateSpec(Model):
     identifiers: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
     relations: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
     custom_properties: Union[str, Dict[str, Any]] = UnionType((StringType, DictType(AnyType)), default={})
+    mergeable: bool = BooleanType(default=False)
     processor: str = StringType()
 
 

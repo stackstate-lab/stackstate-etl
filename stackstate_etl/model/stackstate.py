@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Union
 import pytz
 from schematics import Model
 from schematics.transforms import blacklist, wholelist
-from schematics.types import (BaseType, DictType, FloatType, ListType,
+from schematics.types import (BaseType, BooleanType, DictType, FloatType, ListType,
                               ModelType, StringType)
 from schematics.types import TimestampType as DefaultTimestampType
 from schematics.types import URLType
@@ -95,6 +95,8 @@ class ComponentProperties(Model):
     def dedup_labels(self):
         labels = set(self.labels)
         self.labels = list(labels)
+        identifiers = set(self.identifiers)
+        self.identifiers = list(identifiers)
 
 
 class Component(Model):
@@ -104,9 +106,10 @@ class Component(Model):
         ComponentProperties, required=True, default=ComponentProperties(), serialized_name="data"
     )
     relations: List[Relation] = ListType(ModelType(Relation), default=[])
+    mergeable: bool = BooleanType(default=False)
 
     class Options:
-        roles = {"public": blacklist("relations")}
+        roles = {"public": blacklist("relations", "mergeable")}
 
     def set_type(self, name: str):
         if self.component_type is None:
@@ -122,6 +125,12 @@ class Component(Model):
 
     def set_name(self, name: str):
         self.properties.name = name
+
+    def merge(self, source: "Component"):
+        self.relations.extend(source.relations)
+        self.properties.labels.extend(source.properties.labels)
+        self.properties.identifiers.extend(source.properties.identifiers)
+        self.properties.custom_properties.update(source.properties.custom_properties)
 
 
 HEALTH_STATE_CHOICES = ["CLEAR", "DEVIATING", "CRITICAL"]
