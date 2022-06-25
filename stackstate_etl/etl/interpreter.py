@@ -48,6 +48,23 @@ class BaseInterpreter:
         self.ctx = ctx
         self.aeval = Interpreter()
         self.source_name = "default"
+        self._init_static_symtable()
+
+    def _init_static_symtable(self):
+        symtable = self.aeval.symtable
+        ctx = self.ctx
+        symtable["factory"] = ctx.factory
+        symtable["jpath"] = ctx.jpath
+        symtable["session"] = ctx.session
+        symtable["global_session"] = ctx.global_session
+        symtable["uid"] = ctx.factory.get_uid
+        symtable["py_"] = pydash
+        symtable["datetime"] = datetime
+        symtable["pytz"] = pytz
+        symtable["math"] = math
+        symtable["requests"] = requests
+        symtable["pandas"] = pandas
+        symtable["log"] = ctx.factory.log
 
     def _run_code(self, code: str, property_name) -> Any:
         if code is None:
@@ -92,25 +109,13 @@ class BaseInterpreter:
     def _update_asteval_symtable(self) -> Dict[str, Any]:
         symtable = self.aeval.symtable
         ctx = self.ctx
-        symtable["factory"] = ctx.factory
         symtable["item"] = ctx.item
         symtable["component"] = ctx.component
         symtable["metric"] = ctx.metric
         symtable["event"] = ctx.event
         symtable["health"] = ctx.health
-        symtable["jpath"] = ctx.jpath
-        symtable["session"] = ctx.session
-        symtable["global_session"] = ctx.global_session
         for name, ds in ctx.datasources.items():
             symtable[name] = ds
-        symtable["uid"] = ctx.factory.get_uid
-        symtable["py_"] = pydash
-        symtable["datetime"] = datetime
-        symtable["pytz"] = pytz
-        symtable["math"] = math
-        symtable["requests"] = requests
-        symtable["pandas"] = pandas
-        symtable["log"] = ctx.factory.log
         return symtable
 
 

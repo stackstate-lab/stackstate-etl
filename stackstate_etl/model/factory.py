@@ -2,6 +2,7 @@ import logging
 from typing import Any, Dict, List, Optional, Union
 
 from jsonpath_ng import parse
+from cachetools import cached, LRUCache
 
 from stackstate_etl.model.stackstate import (Component, Event,
                                              HealthCheckState, Metric,
@@ -18,15 +19,18 @@ class TopologyFactory:
         self.lookups: Dict[str, Any] = {}
         self.log = logging.getLogger()
 
-    @staticmethod
-    def jpath(path: str, target: Any, default: Any = None) -> Union[Optional[Any], List[Any]]:
-        jsonpath_expr = parse(path)
+    def jpath(self, path: str, target: Any, default: Any = None) -> Union[Optional[Any], List[Any]]:
+        jsonpath_expr = self._get_jsonpath_expr(path)
         matches = jsonpath_expr.find(target)
         if not matches:
             return default
         if len(matches) == 1:
             return matches[0].value
         return [m.value for m in matches]
+
+    @cached(cache=LRUCache(maxsize=100))
+    def _get_jsonpath_expr(self, path: str):
+        return parse(path)
 
     def add_event(self, event: Event):
         self.events.append(event)
@@ -158,8 +162,8 @@ class TopologyFactory:
                         self.log.error(msg)
                         self.log.error("Current components known in factory:")
                         for uid in self.components.keys():
-                            self.log.error(uid)
-                        raise Exception()
+                            self.log.info(uid)
+                        raise Exception(msg)
             source.relations = []
 
     @staticmethod
