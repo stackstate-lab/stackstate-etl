@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>stackstate_etl.model.stackstate API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>stackstate_etl.model.stackstate</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+from datetime import datetime
+from typing import Any, Dict, List, Union
+
+import pytz
+from schematics import Model
+from schematics.transforms import blacklist, wholelist
+from schematics.types import (BaseType, BooleanType, DictType, FloatType, ListType,
+                              ModelType, StringType)
+from schematics.types import TimestampType as DefaultTimestampType
+from schematics.types import URLType
+
+
+def to_json(item: Union[Model, List[Model]]) -&gt; str:
+    if isinstance(item, list):
+        dump_list = []
+        for i in item:
+            dump_list.append(i.to_primitive())
+        return json.dumps(dump_list)
+    return json.dumps(item.to_primitive())
+
+
+class AnyType(BaseType):
+    def __init__(self, **kwargs):
+        super(AnyType, self).__init__(**kwargs)
+
+
+class TimestampType(DefaultTimestampType):
+    def to_primitive(self, value, context=None):
+        value.astimezone(pytz.UTC)
+        return int(round(value.timestamp()))  # seconds
+
+
+class ComponentType(Model):
+    name: str = StringType(required=True)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+
+class Relation(Model):
+    external_id: str = StringType(required=True, serialized_name=&#34;externalId&#34;)
+    relation_type: ComponentType = ModelType(ComponentType, serialized_name=&#34;type&#34;)
+    source_id: str = StringType(required=True, serialized_name=&#34;sourceId&#34;)
+    target_id: str = StringType(required=True, serialized_name=&#34;targetId&#34;)
+    properties: Dict[str, Any] = DictType(AnyType(), required=True, default={&#34;labels&#34;: []}, serialized_name=&#34;data&#34;)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+    def set_type(self, name: str):
+        if self.relation_type is None:
+            self.relation_type = ComponentType({&#34;name&#34;: name})
+        else:
+            self.relation_type.name = name
+
+    def get_type(self) -&gt; str:
+        if self.relation_type is None:
+            return &#34;&#34;
+        else:
+            return self.relation_type.name
+
+
+class ComponentProperties(Model):
+    name: str = StringType(required=True)
+    layer: str = StringType(default=&#34;Unknown&#34;)
+    domain: str = StringType(default=&#34;Unknown&#34;)
+    environment: str = StringType(default=&#34;Unknown&#34;)
+    labels: List[str] = ListType(StringType(), default=[])
+    identifiers: List[str] = ListType(StringType(), default=[])
+    custom_properties: Dict[str, Any] = DictType(AnyType(), default={})
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+    def add_label(self, label: str):
+        self.labels.append(label)
+
+    def add_label_kv(self, key: str, value: str):
+        self.labels.append(f&#34;{key}:{value}&#34;)
+
+    def add_identifier(self, identifier: str):
+        if identifier not in self.identifiers:
+            self.identifiers.append(identifier)
+
+    def update_properties(self, properties: Dict[str, Any]):
+        self.custom_properties.update(properties)
+
+    def add_property(self, name: str, value: Any):
+        self.custom_properties[name] = value
+
+    def get_property(self, name: str):
+        return self.custom_properties[name]
+
+    def dedup_labels(self):
+        labels = set(self.labels)
+        self.labels = list(labels)
+        identifiers = set(self.identifiers)
+        self.identifiers = list(identifiers)
+
+
+class Component(Model):
+    uid: str = StringType(required=True, serialized_name=&#34;externalId&#34;)
+    component_type: ComponentType = ModelType(ComponentType, serialized_name=&#34;type&#34;)
+    properties: ComponentProperties = ModelType(
+        ComponentProperties, required=True, default=ComponentProperties(), serialized_name=&#34;data&#34;
+    )
+    relations: List[Relation] = ListType(ModelType(Relation), default=[])
+    mergeable: bool = BooleanType(default=False)
+
+    class Options:
+        roles = {&#34;public&#34;: blacklist(&#34;relations&#34;, &#34;mergeable&#34;)}
+
+    def set_type(self, name: str):
+        if self.component_type is None:
+            self.component_type = ComponentType({&#34;name&#34;: name})
+        else:
+            self.component_type.name = name
+
+    def get_type(self) -&gt; str:
+        return self.component_type.name
+
+    def get_name(self) -&gt; str:
+        return self.properties.name
+
+    def set_name(self, name: str):
+        self.properties.name = name
+
+    def merge(self, source: &#34;Component&#34;):
+        self.relations.extend(source.relations)
+        self.properties.labels.extend(source.properties.labels)
+        self.properties.identifiers.extend(source.properties.identifiers)
+        self.properties.custom_properties.update(source.properties.custom_properties)
+
+
+HEALTH_STATE_CHOICES = [&#34;CLEAR&#34;, &#34;DEVIATING&#34;, &#34;CRITICAL&#34;]
+
+
+class HealthCheckState(Model):
+    check_id: str = StringType(required=True, serialized_name=&#34;checkStateId&#34;)
+    check_name: str = StringType(required=True, serialized_name=&#34;name&#34;)
+    topo_identifier: str = StringType(required=True, serialized_name=&#34;topologyElementIdentifier&#34;)
+    message: str = StringType(required=False)
+    health: str = StringType(required=True, choices=HEALTH_STATE_CHOICES)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+
+class SourceLink(Model):
+    title = StringType(required=True)
+    url = URLType(fqdn=False, required=True)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+
+EVENT_CATEGORY_CHOICES = [&#34;Activities&#34;, &#34;Alerts&#34;, &#34;Anomalies&#34;, &#34;Changes&#34;, &#34;Others&#34;]
+
+
+class EventContext(Model):
+    category: str = StringType(required=True, choices=EVENT_CATEGORY_CHOICES)
+    data: Dict[str, Any] = DictType(AnyType, default={})
+    element_identifiers: List[str] = ListType(StringType, required=False, default=[])
+    source: str = StringType(required=True, default=&#34;ETL&#34;)
+    source_links: List[SourceLink] = ListType(ModelType(SourceLink), required=False, default=[])
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+        serialize_when_none = False
+
+
+class Event(Model):
+    context: EventContext = ModelType(EventContext, required=True, default=EventContext())
+    event_type: str = StringType(required=True)
+    msg_title: str = StringType(required=True)
+    msg_text: str = StringType(required=True)
+    source_type_name: str = StringType(required=True, default=&#34;ETL&#34;)
+    tags: List[str] = ListType(StringType, required=False, default=[])
+    timestamp: datetime = TimestampType(required=True)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+
+METRIC_TYPE_CHOICES = [&#34;gauge&#34;, &#34;count&#34;, &#34;monotonic_count&#34;, &#34;rate&#34;, &#34;histogram&#34;, &#34;historate&#34;, &#34;increment&#34;, &#34;decrement&#34;]
+
+
+class Metric(Model):
+    name: str = StringType(required=True)
+    timestamp: datetime = TimestampType(default=datetime.now(pytz.utc))
+    metric_type: str = StringType(default=&#34;gauge&#34;, choices=METRIC_TYPE_CHOICES)
+    value: float = FloatType(required=True)
+    target_uid: str = StringType(required=True)
+    tags: List[str] = ListType(StringType, required=False, default=[])
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="stackstate_etl.model.stackstate.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>item: Union[schematics.deprecated.patch_models.<locals>.Model, List[schematics.deprecated.patch_models.<locals>.Model]]) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(item: Union[Model, List[Model]]) -&gt; str:
+    if isinstance(item, list):
+        dump_list = []
+        for i in item:
+            dump_list.append(i.to_primitive())
+        return json.dumps(dump_list)
+    return json.dumps(item.to_primitive())</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="stackstate_etl.model.stackstate.AnyType"><code class="flex name class">
+<span>class <span class="ident">AnyType</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A base class for Types in a Schematics model. Instances of this
+class may be added to subclasses of <code>Model</code> to define a model schema.</p>
+<p>Validators that need to access variables on the instance
+can be defined be implementing methods whose names start with <code>validate_</code>
+and accept one parameter (in addition to <code>self</code>)</p>
+<p>:param required:
+Invalidate field when value is None or is not supplied. Default:
+False.
+:param default:
+When no data is provided default to this value. May be a callable.
+Default: None.
+:param serialized_name:
+The name of this field defaults to the class attribute used in the
+model. However if the field has another name in foreign data set this
+argument. Serialized data will use this value for the key name too.
+:param deserialize_from:
+A name or list of named fields for which foreign data sets are
+searched to provide a value for the given field.
+This only effects
+inbound data.
+:param choices:
+A list of valid choices. This is the last step of the validator
+chain.
+:param validators:
+A list of callables. Each callable receives the value after it has been
+converted into a rich python type. Default: []
+:param serialize_when_none:
+Dictates if the field should appear in the serialized data even if the
+value is None. Default: None.
+:param messages:
+Override the error messages with a dict. You can also do this by
+subclassing the Type and defining a <code>MESSAGES</code> dict attribute on the
+class. A metaclass will merge all the <code>MESSAGES</code> and override the
+resulting dict with instance level <code>messages</code> and assign to
+<code>self.messages</code>.
+:param metadata:
+Dictionary for storing custom metadata associated with the field.
+To encourage compatibility with external tools, we suggest these keys
+for common metadata:
+- <em>label</em> : Brief human-readable label
+- <em>description</em> : Explanation of the purpose of the field. Used for
+help, tooltips, documentation, etc.
+- <em>example</em> : A concrete example of the field usage.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AnyType(BaseType):
+    def __init__(self, **kwargs):
+        super(AnyType, self).__init__(**kwargs)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.types.base.BaseType</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.AnyType.MESSAGES"><code class="name">var <span class="ident">MESSAGES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component"><code class="flex name class">
+<span>class <span class="ident">Component</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Component(Model):
+    uid: str = StringType(required=True, serialized_name=&#34;externalId&#34;)
+    component_type: ComponentType = ModelType(ComponentType, serialized_name=&#34;type&#34;)
+    properties: ComponentProperties = ModelType(
+        ComponentProperties, required=True, default=ComponentProperties(), serialized_name=&#34;data&#34;
+    )
+    relations: List[Relation] = ListType(ModelType(Relation), default=[])
+    mergeable: bool = BooleanType(default=False)
+
+    class Options:
+        roles = {&#34;public&#34;: blacklist(&#34;relations&#34;, &#34;mergeable&#34;)}
+
+    def set_type(self, name: str):
+        if self.component_type is None:
+            self.component_type = ComponentType({&#34;name&#34;: name})
+        else:
+            self.component_type.name = name
+
+    def get_type(self) -&gt; str:
+        return self.component_type.name
+
+    def get_name(self) -&gt; str:
+        return self.properties.name
+
+    def set_name(self, name: str):
+        self.properties.name = name
+
+    def merge(self, source: &#34;Component&#34;):
+        self.relations.extend(source.relations)
+        self.properties.labels.extend(source.properties.labels)
+        self.properties.identifiers.extend(source.properties.identifiers)
+        self.properties.custom_properties.update(source.properties.custom_properties)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.Component.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.component_type"><code class="name">var <span class="ident">component_type</span> : <a title="stackstate_etl.model.stackstate.ComponentType" href="#stackstate_etl.model.stackstate.ComponentType">ComponentType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.mergeable"><code class="name">var <span class="ident">mergeable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.properties"><code class="name">var <span class="ident">properties</span> : <a title="stackstate_etl.model.stackstate.ComponentProperties" href="#stackstate_etl.model.stackstate.ComponentProperties">ComponentProperties</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.relations"><code class="name">var <span class="ident">relations</span> : List[<a title="stackstate_etl.model.stackstate.Relation" href="#stackstate_etl.model.stackstate.Relation">Relation</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.uid"><code class="name">var <span class="ident">uid</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.Component.get_name"><code class="name flex">
+<span>def <span class="ident">get_name</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_name(self) -&gt; str:
+    return self.properties.name</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.get_type"><code class="name flex">
+<span>def <span class="ident">get_type</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_type(self) -&gt; str:
+    return self.component_type.name</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.merge"><code class="name flex">
+<span>def <span class="ident">merge</span></span>(<span>self, source: <a title="stackstate_etl.model.stackstate.Component" href="#stackstate_etl.model.stackstate.Component">Component</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def merge(self, source: &#34;Component&#34;):
+    self.relations.extend(source.relations)
+    self.properties.labels.extend(source.properties.labels)
+    self.properties.identifiers.extend(source.properties.identifiers)
+    self.properties.custom_properties.update(source.properties.custom_properties)</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.set_name"><code class="name flex">
+<span>def <span class="ident">set_name</span></span>(<span>self, name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_name(self, name: str):
+    self.properties.name = name</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Component.set_type"><code class="name flex">
+<span>def <span class="ident">set_type</span></span>(<span>self, name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_type(self, name: str):
+    if self.component_type is None:
+        self.component_type = ComponentType({&#34;name&#34;: name})
+    else:
+        self.component_type.name = name</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties"><code class="flex name class">
+<span>class <span class="ident">ComponentProperties</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ComponentProperties(Model):
+    name: str = StringType(required=True)
+    layer: str = StringType(default=&#34;Unknown&#34;)
+    domain: str = StringType(default=&#34;Unknown&#34;)
+    environment: str = StringType(default=&#34;Unknown&#34;)
+    labels: List[str] = ListType(StringType(), default=[])
+    identifiers: List[str] = ListType(StringType(), default=[])
+    custom_properties: Dict[str, Any] = DictType(AnyType(), default={})
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+    def add_label(self, label: str):
+        self.labels.append(label)
+
+    def add_label_kv(self, key: str, value: str):
+        self.labels.append(f&#34;{key}:{value}&#34;)
+
+    def add_identifier(self, identifier: str):
+        if identifier not in self.identifiers:
+            self.identifiers.append(identifier)
+
+    def update_properties(self, properties: Dict[str, Any]):
+        self.custom_properties.update(properties)
+
+    def add_property(self, name: str, value: Any):
+        self.custom_properties[name] = value
+
+    def get_property(self, name: str):
+        return self.custom_properties[name]
+
+    def dedup_labels(self):
+        labels = set(self.labels)
+        self.labels = list(labels)
+        identifiers = set(self.identifiers)
+        self.identifiers = list(identifiers)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.custom_properties"><code class="name">var <span class="ident">custom_properties</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.domain"><code class="name">var <span class="ident">domain</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.environment"><code class="name">var <span class="ident">environment</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.identifiers"><code class="name">var <span class="ident">identifiers</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.labels"><code class="name">var <span class="ident">labels</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.layer"><code class="name">var <span class="ident">layer</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.add_identifier"><code class="name flex">
+<span>def <span class="ident">add_identifier</span></span>(<span>self, identifier: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_identifier(self, identifier: str):
+    if identifier not in self.identifiers:
+        self.identifiers.append(identifier)</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.add_label"><code class="name flex">
+<span>def <span class="ident">add_label</span></span>(<span>self, label: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_label(self, label: str):
+    self.labels.append(label)</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.add_label_kv"><code class="name flex">
+<span>def <span class="ident">add_label_kv</span></span>(<span>self, key: str, value: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_label_kv(self, key: str, value: str):
+    self.labels.append(f&#34;{key}:{value}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.add_property"><code class="name flex">
+<span>def <span class="ident">add_property</span></span>(<span>self, name: str, value: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_property(self, name: str, value: Any):
+    self.custom_properties[name] = value</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.dedup_labels"><code class="name flex">
+<span>def <span class="ident">dedup_labels</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dedup_labels(self):
+    labels = set(self.labels)
+    self.labels = list(labels)
+    identifiers = set(self.identifiers)
+    self.identifiers = list(identifiers)</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.get_property"><code class="name flex">
+<span>def <span class="ident">get_property</span></span>(<span>self, name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_property(self, name: str):
+    return self.custom_properties[name]</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentProperties.update_properties"><code class="name flex">
+<span>def <span class="ident">update_properties</span></span>(<span>self, properties: Dict[str, Any])</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_properties(self, properties: Dict[str, Any]):
+    self.custom_properties.update(properties)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentType"><code class="flex name class">
+<span>class <span class="ident">ComponentType</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ComponentType(Model):
+    name: str = StringType(required=True)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.ComponentType.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.ComponentType.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event"><code class="flex name class">
+<span>class <span class="ident">Event</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Event(Model):
+    context: EventContext = ModelType(EventContext, required=True, default=EventContext())
+    event_type: str = StringType(required=True)
+    msg_title: str = StringType(required=True)
+    msg_text: str = StringType(required=True)
+    source_type_name: str = StringType(required=True, default=&#34;ETL&#34;)
+    tags: List[str] = ListType(StringType, required=False, default=[])
+    timestamp: datetime = TimestampType(required=True)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.Event.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.context"><code class="name">var <span class="ident">context</span> : <a title="stackstate_etl.model.stackstate.EventContext" href="#stackstate_etl.model.stackstate.EventContext">EventContext</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.event_type"><code class="name">var <span class="ident">event_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.msg_text"><code class="name">var <span class="ident">msg_text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.msg_title"><code class="name">var <span class="ident">msg_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.source_type_name"><code class="name">var <span class="ident">source_type_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.tags"><code class="name">var <span class="ident">tags</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Event.timestamp"><code class="name">var <span class="ident">timestamp</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.EventContext"><code class="flex name class">
+<span>class <span class="ident">EventContext</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventContext(Model):
+    category: str = StringType(required=True, choices=EVENT_CATEGORY_CHOICES)
+    data: Dict[str, Any] = DictType(AnyType, default={})
+    element_identifiers: List[str] = ListType(StringType, required=False, default=[])
+    source: str = StringType(required=True, default=&#34;ETL&#34;)
+    source_links: List[SourceLink] = ListType(ModelType(SourceLink), required=False, default=[])
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+        serialize_when_none = False</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.EventContext.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.EventContext.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.EventContext.data"><code class="name">var <span class="ident">data</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.EventContext.element_identifiers"><code class="name">var <span class="ident">element_identifiers</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.EventContext.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.EventContext.source_links"><code class="name">var <span class="ident">source_links</span> : List[<a title="stackstate_etl.model.stackstate.SourceLink" href="#stackstate_etl.model.stackstate.SourceLink">SourceLink</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState"><code class="flex name class">
+<span>class <span class="ident">HealthCheckState</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HealthCheckState(Model):
+    check_id: str = StringType(required=True, serialized_name=&#34;checkStateId&#34;)
+    check_name: str = StringType(required=True, serialized_name=&#34;name&#34;)
+    topo_identifier: str = StringType(required=True, serialized_name=&#34;topologyElementIdentifier&#34;)
+    message: str = StringType(required=False)
+    health: str = StringType(required=True, choices=HEALTH_STATE_CHOICES)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState.check_id"><code class="name">var <span class="ident">check_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState.check_name"><code class="name">var <span class="ident">check_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState.health"><code class="name">var <span class="ident">health</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState.message"><code class="name">var <span class="ident">message</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.HealthCheckState.topo_identifier"><code class="name">var <span class="ident">topo_identifier</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric"><code class="flex name class">
+<span>class <span class="ident">Metric</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Metric(Model):
+    name: str = StringType(required=True)
+    timestamp: datetime = TimestampType(default=datetime.now(pytz.utc))
+    metric_type: str = StringType(default=&#34;gauge&#34;, choices=METRIC_TYPE_CHOICES)
+    value: float = FloatType(required=True)
+    target_uid: str = StringType(required=True)
+    tags: List[str] = ListType(StringType, required=False, default=[])
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.Metric.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric.metric_type"><code class="name">var <span class="ident">metric_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric.tags"><code class="name">var <span class="ident">tags</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric.target_uid"><code class="name">var <span class="ident">target_uid</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric.timestamp"><code class="name">var <span class="ident">timestamp</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Metric.value"><code class="name">var <span class="ident">value</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation"><code class="flex name class">
+<span>class <span class="ident">Relation</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Relation(Model):
+    external_id: str = StringType(required=True, serialized_name=&#34;externalId&#34;)
+    relation_type: ComponentType = ModelType(ComponentType, serialized_name=&#34;type&#34;)
+    source_id: str = StringType(required=True, serialized_name=&#34;sourceId&#34;)
+    target_id: str = StringType(required=True, serialized_name=&#34;targetId&#34;)
+    properties: Dict[str, Any] = DictType(AnyType(), required=True, default={&#34;labels&#34;: []}, serialized_name=&#34;data&#34;)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}
+
+    def set_type(self, name: str):
+        if self.relation_type is None:
+            self.relation_type = ComponentType({&#34;name&#34;: name})
+        else:
+            self.relation_type.name = name
+
+    def get_type(self) -&gt; str:
+        if self.relation_type is None:
+            return &#34;&#34;
+        else:
+            return self.relation_type.name</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.Relation.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation.external_id"><code class="name">var <span class="ident">external_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation.properties"><code class="name">var <span class="ident">properties</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation.relation_type"><code class="name">var <span class="ident">relation_type</span> : <a title="stackstate_etl.model.stackstate.ComponentType" href="#stackstate_etl.model.stackstate.ComponentType">ComponentType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation.source_id"><code class="name">var <span class="ident">source_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation.target_id"><code class="name">var <span class="ident">target_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.Relation.get_type"><code class="name flex">
+<span>def <span class="ident">get_type</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_type(self) -&gt; str:
+    if self.relation_type is None:
+        return &#34;&#34;
+    else:
+        return self.relation_type.name</code></pre>
+</details>
+</dd>
+<dt id="stackstate_etl.model.stackstate.Relation.set_type"><code class="name flex">
+<span>def <span class="ident">set_type</span></span>(<span>self, name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_type(self, name: str):
+    if self.relation_type is None:
+        self.relation_type = ComponentType({&#34;name&#34;: name})
+    else:
+        self.relation_type.name = name</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.SourceLink"><code class="flex name class">
+<span>class <span class="ident">SourceLink</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SourceLink(Model):
+    title = StringType(required=True)
+    url = URLType(fqdn=False, required=True)
+
+    class Options:
+        roles = {&#34;public&#34;: wholelist()}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.SourceLink.Options"><code class="name">var <span class="ident">Options</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.SourceLink.title"><code class="name">var <span class="ident">title</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.stackstate.SourceLink.url"><code class="name">var <span class="ident">url</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.stackstate.TimestampType"><code class="flex name class">
+<span>class <span class="ident">TimestampType</span></span>
+<span>(</span><span>formats=None, parser=None, drop_tzinfo=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A variant of <code>DateTimeType</code> that exports itself as a Unix timestamp
+instead of an ISO 8601 string. Always sets <code>tzd='require'</code> and
+<code>convert_tz=True</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TimestampType(DefaultTimestampType):
+    def to_primitive(self, value, context=None):
+        value.astimezone(pytz.UTC)
+        return int(round(value.timestamp()))  # seconds</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.types.base.TimestampType</li>
+<li>schematics.types.base.DateTimeType</li>
+<li>schematics.types.base.BaseType</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.TimestampType.MESSAGES"><code class="name">var <span class="ident">MESSAGES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="stackstate_etl.model.stackstate.TimestampType.to_primitive"><code class="name flex">
+<span>def <span class="ident">to_primitive</span></span>(<span>self, value, context=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert internal data to a value safe to serialize.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_primitive(self, value, context=None):
+    value.astimezone(pytz.UTC)
+    return int(round(value.timestamp()))  # seconds</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="stackstate_etl.model" href="index.html">stackstate_etl.model</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="stackstate_etl.model.stackstate.to_json" href="#stackstate_etl.model.stackstate.to_json">to_json</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.AnyType" href="#stackstate_etl.model.stackstate.AnyType">AnyType</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.stackstate.AnyType.MESSAGES" href="#stackstate_etl.model.stackstate.AnyType.MESSAGES">MESSAGES</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.Component" href="#stackstate_etl.model.stackstate.Component">Component</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.Component.Options" href="#stackstate_etl.model.stackstate.Component.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.component_type" href="#stackstate_etl.model.stackstate.Component.component_type">component_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.get_name" href="#stackstate_etl.model.stackstate.Component.get_name">get_name</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.get_type" href="#stackstate_etl.model.stackstate.Component.get_type">get_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.merge" href="#stackstate_etl.model.stackstate.Component.merge">merge</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.mergeable" href="#stackstate_etl.model.stackstate.Component.mergeable">mergeable</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.properties" href="#stackstate_etl.model.stackstate.Component.properties">properties</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.relations" href="#stackstate_etl.model.stackstate.Component.relations">relations</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.set_name" href="#stackstate_etl.model.stackstate.Component.set_name">set_name</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.set_type" href="#stackstate_etl.model.stackstate.Component.set_type">set_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Component.uid" href="#stackstate_etl.model.stackstate.Component.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.ComponentProperties" href="#stackstate_etl.model.stackstate.ComponentProperties">ComponentProperties</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.Options" href="#stackstate_etl.model.stackstate.ComponentProperties.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.add_identifier" href="#stackstate_etl.model.stackstate.ComponentProperties.add_identifier">add_identifier</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.add_label" href="#stackstate_etl.model.stackstate.ComponentProperties.add_label">add_label</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.add_label_kv" href="#stackstate_etl.model.stackstate.ComponentProperties.add_label_kv">add_label_kv</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.add_property" href="#stackstate_etl.model.stackstate.ComponentProperties.add_property">add_property</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.custom_properties" href="#stackstate_etl.model.stackstate.ComponentProperties.custom_properties">custom_properties</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.dedup_labels" href="#stackstate_etl.model.stackstate.ComponentProperties.dedup_labels">dedup_labels</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.domain" href="#stackstate_etl.model.stackstate.ComponentProperties.domain">domain</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.environment" href="#stackstate_etl.model.stackstate.ComponentProperties.environment">environment</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.get_property" href="#stackstate_etl.model.stackstate.ComponentProperties.get_property">get_property</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.identifiers" href="#stackstate_etl.model.stackstate.ComponentProperties.identifiers">identifiers</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.labels" href="#stackstate_etl.model.stackstate.ComponentProperties.labels">labels</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.layer" href="#stackstate_etl.model.stackstate.ComponentProperties.layer">layer</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.name" href="#stackstate_etl.model.stackstate.ComponentProperties.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentProperties.update_properties" href="#stackstate_etl.model.stackstate.ComponentProperties.update_properties">update_properties</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.ComponentType" href="#stackstate_etl.model.stackstate.ComponentType">ComponentType</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.stackstate.ComponentType.Options" href="#stackstate_etl.model.stackstate.ComponentType.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.ComponentType.name" href="#stackstate_etl.model.stackstate.ComponentType.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.Event" href="#stackstate_etl.model.stackstate.Event">Event</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.Event.Options" href="#stackstate_etl.model.stackstate.Event.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.context" href="#stackstate_etl.model.stackstate.Event.context">context</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.event_type" href="#stackstate_etl.model.stackstate.Event.event_type">event_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.msg_text" href="#stackstate_etl.model.stackstate.Event.msg_text">msg_text</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.msg_title" href="#stackstate_etl.model.stackstate.Event.msg_title">msg_title</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.source_type_name" href="#stackstate_etl.model.stackstate.Event.source_type_name">source_type_name</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.tags" href="#stackstate_etl.model.stackstate.Event.tags">tags</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Event.timestamp" href="#stackstate_etl.model.stackstate.Event.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.EventContext" href="#stackstate_etl.model.stackstate.EventContext">EventContext</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.EventContext.Options" href="#stackstate_etl.model.stackstate.EventContext.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.EventContext.category" href="#stackstate_etl.model.stackstate.EventContext.category">category</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.EventContext.data" href="#stackstate_etl.model.stackstate.EventContext.data">data</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.EventContext.element_identifiers" href="#stackstate_etl.model.stackstate.EventContext.element_identifiers">element_identifiers</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.EventContext.source" href="#stackstate_etl.model.stackstate.EventContext.source">source</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.EventContext.source_links" href="#stackstate_etl.model.stackstate.EventContext.source_links">source_links</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.HealthCheckState" href="#stackstate_etl.model.stackstate.HealthCheckState">HealthCheckState</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.HealthCheckState.Options" href="#stackstate_etl.model.stackstate.HealthCheckState.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.HealthCheckState.check_id" href="#stackstate_etl.model.stackstate.HealthCheckState.check_id">check_id</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.HealthCheckState.check_name" href="#stackstate_etl.model.stackstate.HealthCheckState.check_name">check_name</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.HealthCheckState.health" href="#stackstate_etl.model.stackstate.HealthCheckState.health">health</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.HealthCheckState.message" href="#stackstate_etl.model.stackstate.HealthCheckState.message">message</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.HealthCheckState.topo_identifier" href="#stackstate_etl.model.stackstate.HealthCheckState.topo_identifier">topo_identifier</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.Metric" href="#stackstate_etl.model.stackstate.Metric">Metric</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.Metric.Options" href="#stackstate_etl.model.stackstate.Metric.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Metric.metric_type" href="#stackstate_etl.model.stackstate.Metric.metric_type">metric_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Metric.name" href="#stackstate_etl.model.stackstate.Metric.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Metric.tags" href="#stackstate_etl.model.stackstate.Metric.tags">tags</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Metric.target_uid" href="#stackstate_etl.model.stackstate.Metric.target_uid">target_uid</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Metric.timestamp" href="#stackstate_etl.model.stackstate.Metric.timestamp">timestamp</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Metric.value" href="#stackstate_etl.model.stackstate.Metric.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.Relation" href="#stackstate_etl.model.stackstate.Relation">Relation</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.stackstate.Relation.Options" href="#stackstate_etl.model.stackstate.Relation.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.external_id" href="#stackstate_etl.model.stackstate.Relation.external_id">external_id</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.get_type" href="#stackstate_etl.model.stackstate.Relation.get_type">get_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.properties" href="#stackstate_etl.model.stackstate.Relation.properties">properties</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.relation_type" href="#stackstate_etl.model.stackstate.Relation.relation_type">relation_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.set_type" href="#stackstate_etl.model.stackstate.Relation.set_type">set_type</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.source_id" href="#stackstate_etl.model.stackstate.Relation.source_id">source_id</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.Relation.target_id" href="#stackstate_etl.model.stackstate.Relation.target_id">target_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.SourceLink" href="#stackstate_etl.model.stackstate.SourceLink">SourceLink</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.stackstate.SourceLink.Options" href="#stackstate_etl.model.stackstate.SourceLink.Options">Options</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.SourceLink.title" href="#stackstate_etl.model.stackstate.SourceLink.title">title</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.SourceLink.url" href="#stackstate_etl.model.stackstate.SourceLink.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.stackstate.TimestampType" href="#stackstate_etl.model.stackstate.TimestampType">TimestampType</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.stackstate.TimestampType.MESSAGES" href="#stackstate_etl.model.stackstate.TimestampType.MESSAGES">MESSAGES</a></code></li>
+<li><code><a title="stackstate_etl.model.stackstate.TimestampType.to_primitive" href="#stackstate_etl.model.stackstate.TimestampType.to_primitive">to_primitive</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

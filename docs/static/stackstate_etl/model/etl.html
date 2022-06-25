@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>stackstate_etl.model.etl API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>stackstate_etl.model.etl</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import Any, Dict, List, Union
+
+from schematics import Model
+from schematics.types import (BooleanType, DictType, ListType, ModelType, StringType,
+                              UnionType)
+
+from stackstate_etl.model.stackstate import EVENT_CATEGORY_CHOICES, AnyType
+
+
+class DataSource(Model):
+    name: str = StringType(required=True)
+    module: str = StringType()
+    cls: str = StringType()
+    init: str = StringType(required=True)
+
+
+class Query(Model):
+    name: str = StringType(required=True)
+    query: str = StringType(required=True)
+    processor: str = StringType(required=False)
+    template_refs: List[str] = ListType(StringType(), required=True)
+
+
+class ComponentTemplateSpec(Model):
+    name: str = StringType(required=True)
+    component_type: str = StringType(required=True, serialized_name=&#34;type&#34;)
+    uid: str = StringType(required=True)
+    layer: str = StringType()
+    domain: str = StringType()
+    environment: str = StringType()
+    labels: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    identifiers: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    relations: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    custom_properties: Union[str, Dict[str, Any]] = UnionType((StringType, DictType(AnyType)), default={})
+    mergeable: bool = BooleanType(default=False)
+    processor: str = StringType()
+
+
+class ComponentTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(ComponentTemplateSpec)
+    code = StringType()
+
+
+class EventSourceLink(Model):
+    title: str = StringType(required=True)
+    url: str = StringType(required=True)
+
+
+class EventTemplateSpec(Model):
+    category: str = StringType(required=True, choices=EVENT_CATEGORY_CHOICES)
+    event_type: str = StringType(required=True)
+    msg_title: str = StringType(required=True)
+    msg_text: str = StringType(required=True)
+    element_identifiers: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    source: str = StringType(required=True, default=&#34;ETL&#34;)
+    source_links: List[EventSourceLink] = ListType(ModelType(EventSourceLink, default=[]))
+    data: Union[str, Dict[str, Any]] = UnionType((StringType, DictType(AnyType)), default={})
+    tags: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+
+
+class EventTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(EventTemplateSpec)
+
+
+class HealthTemplateSpec(Model):
+    check_id: str = StringType(required=True)
+    check_name: str = StringType(required=True)
+    topo_identifier: str = StringType(required=True)
+    message: str = StringType(required=False)
+    health: str = StringType(required=True)
+
+
+class HealthTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(HealthTemplateSpec)
+
+
+class MetricTemplateSpec(Model):
+    name: str = StringType(required=True)
+    metric_type: str = StringType(required=True)
+    value: str = StringType(required=True)
+    target_uid: str = StringType(required=True)
+    tags: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+
+
+class MetricTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(MetricTemplateSpec)
+    code = StringType()
+
+
+class ProcessorSpec(Model):
+    name: str = StringType(required=True)
+    code = StringType()
+
+
+class Template(Model):
+    components: List[ComponentTemplate] = ListType(ModelType(ComponentTemplate), default=[])
+    metrics: List[MetricTemplate] = ListType(ModelType(MetricTemplate), default=[])
+    events: List[EventTemplate] = ListType(ModelType(EventTemplate), default=[])
+    health: List[HealthTemplate] = ListType(ModelType(HealthTemplate), default=[])
+
+
+class ETL(Model):
+    source: str = StringType(default=&#34;Unknown&#34;)
+    refs: List[str] = ListType(StringType(), default=[])
+    pre_processors: List[ProcessorSpec] = ListType(ModelType(ProcessorSpec), default=[])
+    post_processors: List[ProcessorSpec] = ListType(ModelType(ProcessorSpec), default=[])
+    datasources: List[DataSource] = ListType(ModelType(DataSource), default=[])
+    queries: List[Query] = ListType(ModelType(Query), default=[])
+    template: Template = ModelType(Template)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="stackstate_etl.model.etl.ComponentTemplate"><code class="flex name class">
+<span>class <span class="ident">ComponentTemplate</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ComponentTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(ComponentTemplateSpec)
+    code = StringType()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.ComponentTemplate.code"><code class="name">var <span class="ident">code</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplate.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplate.selector"><code class="name">var <span class="ident">selector</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplate.spec"><code class="name">var <span class="ident">spec</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec"><code class="flex name class">
+<span>class <span class="ident">ComponentTemplateSpec</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ComponentTemplateSpec(Model):
+    name: str = StringType(required=True)
+    component_type: str = StringType(required=True, serialized_name=&#34;type&#34;)
+    uid: str = StringType(required=True)
+    layer: str = StringType()
+    domain: str = StringType()
+    environment: str = StringType()
+    labels: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    identifiers: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    relations: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    custom_properties: Union[str, Dict[str, Any]] = UnionType((StringType, DictType(AnyType)), default={})
+    mergeable: bool = BooleanType(default=False)
+    processor: str = StringType()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.component_type"><code class="name">var <span class="ident">component_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.custom_properties"><code class="name">var <span class="ident">custom_properties</span> : Union[str, Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.domain"><code class="name">var <span class="ident">domain</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.environment"><code class="name">var <span class="ident">environment</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.identifiers"><code class="name">var <span class="ident">identifiers</span> : Union[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.labels"><code class="name">var <span class="ident">labels</span> : Union[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.layer"><code class="name">var <span class="ident">layer</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.mergeable"><code class="name">var <span class="ident">mergeable</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.processor"><code class="name">var <span class="ident">processor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.relations"><code class="name">var <span class="ident">relations</span> : Union[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ComponentTemplateSpec.uid"><code class="name">var <span class="ident">uid</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.DataSource"><code class="flex name class">
+<span>class <span class="ident">DataSource</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DataSource(Model):
+    name: str = StringType(required=True)
+    module: str = StringType()
+    cls: str = StringType()
+    init: str = StringType(required=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.DataSource.cls"><code class="name">var <span class="ident">cls</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.DataSource.init"><code class="name">var <span class="ident">init</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.DataSource.module"><code class="name">var <span class="ident">module</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.DataSource.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL"><code class="flex name class">
+<span>class <span class="ident">ETL</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ETL(Model):
+    source: str = StringType(default=&#34;Unknown&#34;)
+    refs: List[str] = ListType(StringType(), default=[])
+    pre_processors: List[ProcessorSpec] = ListType(ModelType(ProcessorSpec), default=[])
+    post_processors: List[ProcessorSpec] = ListType(ModelType(ProcessorSpec), default=[])
+    datasources: List[DataSource] = ListType(ModelType(DataSource), default=[])
+    queries: List[Query] = ListType(ModelType(Query), default=[])
+    template: Template = ModelType(Template)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.ETL.datasources"><code class="name">var <span class="ident">datasources</span> : List[<a title="stackstate_etl.model.etl.DataSource" href="#stackstate_etl.model.etl.DataSource">DataSource</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL.post_processors"><code class="name">var <span class="ident">post_processors</span> : List[<a title="stackstate_etl.model.etl.ProcessorSpec" href="#stackstate_etl.model.etl.ProcessorSpec">ProcessorSpec</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL.pre_processors"><code class="name">var <span class="ident">pre_processors</span> : List[<a title="stackstate_etl.model.etl.ProcessorSpec" href="#stackstate_etl.model.etl.ProcessorSpec">ProcessorSpec</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL.queries"><code class="name">var <span class="ident">queries</span> : List[<a title="stackstate_etl.model.etl.Query" href="#stackstate_etl.model.etl.Query">Query</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL.refs"><code class="name">var <span class="ident">refs</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ETL.template"><code class="name">var <span class="ident">template</span> : <a title="stackstate_etl.model.etl.Template" href="#stackstate_etl.model.etl.Template">Template</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.EventSourceLink"><code class="flex name class">
+<span>class <span class="ident">EventSourceLink</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventSourceLink(Model):
+    title: str = StringType(required=True)
+    url: str = StringType(required=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.EventSourceLink.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventSourceLink.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplate"><code class="flex name class">
+<span>class <span class="ident">EventTemplate</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(EventTemplateSpec)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.EventTemplate.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplate.selector"><code class="name">var <span class="ident">selector</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplate.spec"><code class="name">var <span class="ident">spec</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec"><code class="flex name class">
+<span>class <span class="ident">EventTemplateSpec</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventTemplateSpec(Model):
+    category: str = StringType(required=True, choices=EVENT_CATEGORY_CHOICES)
+    event_type: str = StringType(required=True)
+    msg_title: str = StringType(required=True)
+    msg_text: str = StringType(required=True)
+    element_identifiers: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])
+    source: str = StringType(required=True, default=&#34;ETL&#34;)
+    source_links: List[EventSourceLink] = ListType(ModelType(EventSourceLink, default=[]))
+    data: Union[str, Dict[str, Any]] = UnionType((StringType, DictType(AnyType)), default={})
+    tags: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.data"><code class="name">var <span class="ident">data</span> : Union[str, Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.element_identifiers"><code class="name">var <span class="ident">element_identifiers</span> : Union[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.event_type"><code class="name">var <span class="ident">event_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.msg_text"><code class="name">var <span class="ident">msg_text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.msg_title"><code class="name">var <span class="ident">msg_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.source"><code class="name">var <span class="ident">source</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.source_links"><code class="name">var <span class="ident">source_links</span> : List[<a title="stackstate_etl.model.etl.EventSourceLink" href="#stackstate_etl.model.etl.EventSourceLink">EventSourceLink</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.EventTemplateSpec.tags"><code class="name">var <span class="ident">tags</span> : Union[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplate"><code class="flex name class">
+<span>class <span class="ident">HealthTemplate</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HealthTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(HealthTemplateSpec)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.HealthTemplate.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplate.selector"><code class="name">var <span class="ident">selector</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplate.spec"><code class="name">var <span class="ident">spec</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplateSpec"><code class="flex name class">
+<span>class <span class="ident">HealthTemplateSpec</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HealthTemplateSpec(Model):
+    check_id: str = StringType(required=True)
+    check_name: str = StringType(required=True)
+    topo_identifier: str = StringType(required=True)
+    message: str = StringType(required=False)
+    health: str = StringType(required=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.HealthTemplateSpec.check_id"><code class="name">var <span class="ident">check_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplateSpec.check_name"><code class="name">var <span class="ident">check_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplateSpec.health"><code class="name">var <span class="ident">health</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplateSpec.message"><code class="name">var <span class="ident">message</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.HealthTemplateSpec.topo_identifier"><code class="name">var <span class="ident">topo_identifier</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplate"><code class="flex name class">
+<span>class <span class="ident">MetricTemplate</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MetricTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    spec = ModelType(MetricTemplateSpec)
+    code = StringType()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.MetricTemplate.code"><code class="name">var <span class="ident">code</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplate.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplate.selector"><code class="name">var <span class="ident">selector</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplate.spec"><code class="name">var <span class="ident">spec</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplateSpec"><code class="flex name class">
+<span>class <span class="ident">MetricTemplateSpec</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MetricTemplateSpec(Model):
+    name: str = StringType(required=True)
+    metric_type: str = StringType(required=True)
+    value: str = StringType(required=True)
+    target_uid: str = StringType(required=True)
+    tags: Union[str, List[str]] = UnionType((StringType, ListType(StringType)), default=[])</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.MetricTemplateSpec.metric_type"><code class="name">var <span class="ident">metric_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplateSpec.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplateSpec.tags"><code class="name">var <span class="ident">tags</span> : Union[str, List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplateSpec.target_uid"><code class="name">var <span class="ident">target_uid</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.MetricTemplateSpec.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.ProcessorSpec"><code class="flex name class">
+<span>class <span class="ident">ProcessorSpec</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ProcessorSpec(Model):
+    name: str = StringType(required=True)
+    code = StringType()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.ProcessorSpec.code"><code class="name">var <span class="ident">code</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.ProcessorSpec.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.Query"><code class="flex name class">
+<span>class <span class="ident">Query</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Query(Model):
+    name: str = StringType(required=True)
+    query: str = StringType(required=True)
+    processor: str = StringType(required=False)
+    template_refs: List[str] = ListType(StringType(), required=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.Query.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.Query.processor"><code class="name">var <span class="ident">processor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.Query.query"><code class="name">var <span class="ident">query</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.Query.template_refs"><code class="name">var <span class="ident">template_refs</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="stackstate_etl.model.etl.Template"><code class="flex name class">
+<span>class <span class="ident">Template</span></span>
+<span>(</span><span>raw_data=None, trusted_data=None, deserialize_mapping=None, init=True, partial=True, strict=True, validate=False, app_data=None, lazy=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enclosure for fields and validation. Same pattern deployed by Django
+models, SQLAlchemy declarative extension and other developer friendly
+libraries.</p>
+<p>:param Mapping raw_data:
+The data to be imported into the model instance.
+:param Mapping deserialize_mapping:
+Can be used to provide alternative input names for fields. Values may be
+strings or lists of strings, keyed by the actual field name.
+:param bool partial:
+Allow partial data to validate. Essentially drops the <code>required=True</code>
+settings from field definitions. Default: True
+:param bool strict:
+Complain about unrecognized keys. Default: True</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Template(Model):
+    components: List[ComponentTemplate] = ListType(ModelType(ComponentTemplate), default=[])
+    metrics: List[MetricTemplate] = ListType(ModelType(MetricTemplate), default=[])
+    events: List[EventTemplate] = ListType(ModelType(EventTemplate), default=[])
+    health: List[HealthTemplate] = ListType(ModelType(HealthTemplate), default=[])</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>schematics.deprecated.patch_models.<locals>.Model</li>
+<li>schematics.deprecated.ModelCompatibilityMixin</li>
+<li>schematics.models.Model</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="stackstate_etl.model.etl.Template.components"><code class="name">var <span class="ident">components</span> : List[<a title="stackstate_etl.model.etl.ComponentTemplate" href="#stackstate_etl.model.etl.ComponentTemplate">ComponentTemplate</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.Template.events"><code class="name">var <span class="ident">events</span> : List[<a title="stackstate_etl.model.etl.EventTemplate" href="#stackstate_etl.model.etl.EventTemplate">EventTemplate</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.Template.health"><code class="name">var <span class="ident">health</span> : List[<a title="stackstate_etl.model.etl.HealthTemplate" href="#stackstate_etl.model.etl.HealthTemplate">HealthTemplate</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="stackstate_etl.model.etl.Template.metrics"><code class="name">var <span class="ident">metrics</span> : List[<a title="stackstate_etl.model.etl.MetricTemplate" href="#stackstate_etl.model.etl.MetricTemplate">MetricTemplate</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="stackstate_etl.model" href="index.html">stackstate_etl.model</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.ComponentTemplate" href="#stackstate_etl.model.etl.ComponentTemplate">ComponentTemplate</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplate.code" href="#stackstate_etl.model.etl.ComponentTemplate.code">code</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplate.name" href="#stackstate_etl.model.etl.ComponentTemplate.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplate.selector" href="#stackstate_etl.model.etl.ComponentTemplate.selector">selector</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplate.spec" href="#stackstate_etl.model.etl.ComponentTemplate.spec">spec</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec" href="#stackstate_etl.model.etl.ComponentTemplateSpec">ComponentTemplateSpec</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.component_type" href="#stackstate_etl.model.etl.ComponentTemplateSpec.component_type">component_type</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.custom_properties" href="#stackstate_etl.model.etl.ComponentTemplateSpec.custom_properties">custom_properties</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.domain" href="#stackstate_etl.model.etl.ComponentTemplateSpec.domain">domain</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.environment" href="#stackstate_etl.model.etl.ComponentTemplateSpec.environment">environment</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.identifiers" href="#stackstate_etl.model.etl.ComponentTemplateSpec.identifiers">identifiers</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.labels" href="#stackstate_etl.model.etl.ComponentTemplateSpec.labels">labels</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.layer" href="#stackstate_etl.model.etl.ComponentTemplateSpec.layer">layer</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.mergeable" href="#stackstate_etl.model.etl.ComponentTemplateSpec.mergeable">mergeable</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.name" href="#stackstate_etl.model.etl.ComponentTemplateSpec.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.processor" href="#stackstate_etl.model.etl.ComponentTemplateSpec.processor">processor</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.relations" href="#stackstate_etl.model.etl.ComponentTemplateSpec.relations">relations</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ComponentTemplateSpec.uid" href="#stackstate_etl.model.etl.ComponentTemplateSpec.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.DataSource" href="#stackstate_etl.model.etl.DataSource">DataSource</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.DataSource.cls" href="#stackstate_etl.model.etl.DataSource.cls">cls</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.DataSource.init" href="#stackstate_etl.model.etl.DataSource.init">init</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.DataSource.module" href="#stackstate_etl.model.etl.DataSource.module">module</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.DataSource.name" href="#stackstate_etl.model.etl.DataSource.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.ETL" href="#stackstate_etl.model.etl.ETL">ETL</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.etl.ETL.datasources" href="#stackstate_etl.model.etl.ETL.datasources">datasources</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ETL.post_processors" href="#stackstate_etl.model.etl.ETL.post_processors">post_processors</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ETL.pre_processors" href="#stackstate_etl.model.etl.ETL.pre_processors">pre_processors</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ETL.queries" href="#stackstate_etl.model.etl.ETL.queries">queries</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ETL.refs" href="#stackstate_etl.model.etl.ETL.refs">refs</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ETL.source" href="#stackstate_etl.model.etl.ETL.source">source</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ETL.template" href="#stackstate_etl.model.etl.ETL.template">template</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.EventSourceLink" href="#stackstate_etl.model.etl.EventSourceLink">EventSourceLink</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.EventSourceLink.title" href="#stackstate_etl.model.etl.EventSourceLink.title">title</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventSourceLink.url" href="#stackstate_etl.model.etl.EventSourceLink.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.EventTemplate" href="#stackstate_etl.model.etl.EventTemplate">EventTemplate</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.EventTemplate.name" href="#stackstate_etl.model.etl.EventTemplate.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplate.selector" href="#stackstate_etl.model.etl.EventTemplate.selector">selector</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplate.spec" href="#stackstate_etl.model.etl.EventTemplate.spec">spec</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.EventTemplateSpec" href="#stackstate_etl.model.etl.EventTemplateSpec">EventTemplateSpec</a></code></h4>
+<ul class="two-column">
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.category" href="#stackstate_etl.model.etl.EventTemplateSpec.category">category</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.data" href="#stackstate_etl.model.etl.EventTemplateSpec.data">data</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.element_identifiers" href="#stackstate_etl.model.etl.EventTemplateSpec.element_identifiers">element_identifiers</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.event_type" href="#stackstate_etl.model.etl.EventTemplateSpec.event_type">event_type</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.msg_text" href="#stackstate_etl.model.etl.EventTemplateSpec.msg_text">msg_text</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.msg_title" href="#stackstate_etl.model.etl.EventTemplateSpec.msg_title">msg_title</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.source" href="#stackstate_etl.model.etl.EventTemplateSpec.source">source</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.source_links" href="#stackstate_etl.model.etl.EventTemplateSpec.source_links">source_links</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.EventTemplateSpec.tags" href="#stackstate_etl.model.etl.EventTemplateSpec.tags">tags</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.HealthTemplate" href="#stackstate_etl.model.etl.HealthTemplate">HealthTemplate</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.HealthTemplate.name" href="#stackstate_etl.model.etl.HealthTemplate.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.HealthTemplate.selector" href="#stackstate_etl.model.etl.HealthTemplate.selector">selector</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.HealthTemplate.spec" href="#stackstate_etl.model.etl.HealthTemplate.spec">spec</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.HealthTemplateSpec" href="#stackstate_etl.model.etl.HealthTemplateSpec">HealthTemplateSpec</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.HealthTemplateSpec.check_id" href="#stackstate_etl.model.etl.HealthTemplateSpec.check_id">check_id</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.HealthTemplateSpec.check_name" href="#stackstate_etl.model.etl.HealthTemplateSpec.check_name">check_name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.HealthTemplateSpec.health" href="#stackstate_etl.model.etl.HealthTemplateSpec.health">health</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.HealthTemplateSpec.message" href="#stackstate_etl.model.etl.HealthTemplateSpec.message">message</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.HealthTemplateSpec.topo_identifier" href="#stackstate_etl.model.etl.HealthTemplateSpec.topo_identifier">topo_identifier</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.MetricTemplate" href="#stackstate_etl.model.etl.MetricTemplate">MetricTemplate</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.MetricTemplate.code" href="#stackstate_etl.model.etl.MetricTemplate.code">code</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplate.name" href="#stackstate_etl.model.etl.MetricTemplate.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplate.selector" href="#stackstate_etl.model.etl.MetricTemplate.selector">selector</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplate.spec" href="#stackstate_etl.model.etl.MetricTemplate.spec">spec</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.MetricTemplateSpec" href="#stackstate_etl.model.etl.MetricTemplateSpec">MetricTemplateSpec</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.MetricTemplateSpec.metric_type" href="#stackstate_etl.model.etl.MetricTemplateSpec.metric_type">metric_type</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplateSpec.name" href="#stackstate_etl.model.etl.MetricTemplateSpec.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplateSpec.tags" href="#stackstate_etl.model.etl.MetricTemplateSpec.tags">tags</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplateSpec.target_uid" href="#stackstate_etl.model.etl.MetricTemplateSpec.target_uid">target_uid</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.MetricTemplateSpec.value" href="#stackstate_etl.model.etl.MetricTemplateSpec.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.ProcessorSpec" href="#stackstate_etl.model.etl.ProcessorSpec">ProcessorSpec</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.ProcessorSpec.code" href="#stackstate_etl.model.etl.ProcessorSpec.code">code</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.ProcessorSpec.name" href="#stackstate_etl.model.etl.ProcessorSpec.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.Query" href="#stackstate_etl.model.etl.Query">Query</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.Query.name" href="#stackstate_etl.model.etl.Query.name">name</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.Query.processor" href="#stackstate_etl.model.etl.Query.processor">processor</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.Query.query" href="#stackstate_etl.model.etl.Query.query">query</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.Query.template_refs" href="#stackstate_etl.model.etl.Query.template_refs">template_refs</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="stackstate_etl.model.etl.Template" href="#stackstate_etl.model.etl.Template">Template</a></code></h4>
+<ul class="">
+<li><code><a title="stackstate_etl.model.etl.Template.components" href="#stackstate_etl.model.etl.Template.components">components</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.Template.events" href="#stackstate_etl.model.etl.Template.events">events</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.Template.health" href="#stackstate_etl.model.etl.Template.health">health</a></code></li>
+<li><code><a title="stackstate_etl.model.etl.Template.metrics" href="#stackstate_etl.model.etl.Template.metrics">metrics</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
