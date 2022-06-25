@@ -1,5 +1,5 @@
 # StackState ETL 
 
-StackState ETL is a framework that makes data extract, transform and load of the 4T model simpler by using 
-low-code yaml templates.
+A framework that makes 3rd-party data extract, transform and load into the 4T model simpler by using low-code yaml
+templates.
 
