@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant Driver
+    participant Refs
+    Driver->>Refs: Load all ETL yaml files
+    Note right of Refs: Yamls are executed in the order they are loaded in.<br/>Alphabetical order is applied to yamls inside a directory
+    Driver ->> Driver: Index templates from all loaded ETL models
+    loop ETL Models
+        Driver->>Driver: create new TopologyContext for this model
+        Note right of Driver: Sharing datasources and global_session
+        Driver->>Processor: Execute all `pre_processors` defined in this model.
+        Driver->>Processor: Instantiate datasources defined in this model.
+        loop Queries
+            Driver ->> Processor:  execute query to retrieve list of data objects from datasource
+            loop Templates
+                loop Retrieved data objects
+                     Driver ->> Processor: Execute the `selector` property on the template to see if it is active for the current item.
+                     Driver ->> Processor: Execute the template, if active
+                end
+            end
+            loop Retrieved data objects
+                     Driver ->> Processor: Execute all `processors` defined for query.
+            end
+        end
+        Driver->>Processor: Execute all `pre_processors` defined in this model.
+    end
