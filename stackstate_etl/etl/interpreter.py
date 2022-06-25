@@ -313,7 +313,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
         )
 
     def _get_eval_expression_failed_source(self) -> str:
-        return f"template '{self.source_name}'"
+        return f"template  `{self.template_name}` instance '{self.source_name}'"
 
 
 class ComponentTemplateInterpreter(BaseTemplateInterpreter):
