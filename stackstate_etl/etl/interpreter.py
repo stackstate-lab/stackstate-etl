@@ -1,6 +1,6 @@
 import datetime
 import importlib
-import math
+import pendulum
 from logging import Logger
 from typing import Any, Dict, List, Optional, Union
 
@@ -61,7 +61,7 @@ class BaseInterpreter:
         symtable["py_"] = pydash
         symtable["datetime"] = datetime
         symtable["pytz"] = pytz
-        symtable["math"] = math
+        symtable["pendulum"] = pendulum
         symtable["requests"] = requests
         symtable["pandas"] = pandas
         symtable["log"] = ctx.factory.log

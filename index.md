@@ -41,21 +41,23 @@ while Json Path is evaluated using [jsonpath-ng](https://github.com/h2non/jsonpa
 
 Python expressions or code snippets always have access to the following objects in the context,
 
-| Name               | Type                                                               | Description                                                       | 
-|--------------------|--------------------------------------------------------------------|-------------------------------------------------------------------|
-| factory            | [TopologyFactory](./docs/static/stackstate_etl/model/factory.html) | Registry for 4T elements                                          |
-| jpath              | function                                                           | Accepts a json path expression to evaluate against current `item` |
-| session            | dict                                                               | Dictionary that exists on within the current ETL definition       |
-| global_session     | dict                                                               | Dictionary that exists across all ETL definitions                 |
-| uid                | function                                                           | Used to create ids. See TopologyFactory.get_uid(...)              |
-| datetime           | [datetime](https://docs.python.org/3/library/datetime.html)        | Module supplies classes for manipulating dates and times.         |
-| pytz               | [pytz](https://pythonhosted.org/pytz/)                             | Library allows accurate and cross platform timezone calculations  |
-| math               | [math](https://docs.python.org/3/library/math.html)                | Module provides access to the mathematical functions              |
-| requests           | [requests](https://requests.readthedocs.io/en/latest/)             | Simple HTTP library                                               |
-| pandas             | [pandas](https://pandas.pydata.org/)                               | Data analysis and manipulation tool                               |
-| log                | [Logger](https://docs.python.org/3/library/logging.html)           | Logging                                                           |
-| `datasource name`  | Any                                                                | Datasource instance as defined in ETL yaml                        |
+| Name              | Type                                                               | Description                                                       | 
+|-------------------|--------------------------------------------------------------------|-------------------------------------------------------------------|
+| factory           | [TopologyFactory](./docs/static/stackstate_etl/model/factory.html) | Registry for 4T elements                                          |
+| jpath             | function                                                           | Accepts a json path expression to evaluate against current `item` |
+| session           | dict                                                               | Dictionary that exists on within the current ETL definition       |
+| global_session    | dict                                                               | Dictionary that exists across all ETL definitions                 |
+| uid               | function                                                           | Used to create ids. See TopologyFactory.get_uid(...)              |
+| datetime          | [datetime](https://docs.python.org/3/library/datetime.html)        | Module supplies classes for manipulating dates and times.         |
+| pytz              | [pytz](https://pythonhosted.org/pytz/)                             | Library allows accurate and cross platform timezone calculations  |
+| requests          | [requests](https://requests.readthedocs.io/en/latest/)             | Simple HTTP library                                               |
+| pandas            | [pandas](https://pandas.pydata.org/)                               | Data analysis and manipulation tool                               |
+| pendulum          | [pendulum](https://pendulum.eustace.io/)                           | Drop-in replacement for the standard datetime class               |
+| log               | [Logger](https://docs.python.org/3/library/logging.html)           | Logging                                                           |
+| `datasource name` | Any                                                                | Datasource instance as defined in ETL yaml                        |
 
+
+Including the [builtins](https://newville.github.io/asteval/basics.html#built-in-functions) provided by asteval itself.
 
 As the framework processes rows of data, temporary objects become available depending on current template being evaluated.
 
