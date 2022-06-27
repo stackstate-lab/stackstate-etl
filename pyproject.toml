@@ -119,6 +119,15 @@ ignore_missing_imports = true
 module = "click.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "pendulum.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "cachetools.*"
+ignore_missing_imports = true
+
+
 [build-system]
 requires = ["setuptools", "py_backwards", "poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

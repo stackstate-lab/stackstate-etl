@@ -1,8 +1,8 @@
 import logging
 from typing import Any, Dict, List, Optional, Union
 
+from cachetools import LRUCache, cached
 from jsonpath_ng import parse
-from cachetools import cached, LRUCache
 
 from stackstate_etl.model.stackstate import (Component, Event,
                                              HealthCheckState, Metric,
