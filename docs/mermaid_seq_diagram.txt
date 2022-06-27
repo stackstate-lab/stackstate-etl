@@ -1,8 +1,8 @@
 sequenceDiagram
     participant Driver
-    participant Refs
-    Driver->>Refs: Load all ETL yaml files
-    Note right of Refs: Yamls are executed in the order they are loaded in.<br/>Alphabetical order is applied to yamls inside a directory
+    participant Processor
+    Driver->>Driver: Load all ETL yaml files
+    Note right of Driver: Yamls are executed in the order they are loaded in.<br/>Alphabetical order is applied to yamls inside a directory
     Driver ->> Driver: Index templates from all loaded ETL models
     loop ETL Models
         Driver->>Driver: create new TopologyContext for this model
