@@ -4,6 +4,7 @@ from logging import Logger
 from typing import Any, Dict, List, Optional, Union
 
 import attr
+import networkx
 import pandas
 import pendulum
 import pydash
@@ -11,6 +12,7 @@ import pytz
 import requests
 from asteval import Interpreter
 from jsonpath_ng.exceptions import JsonPathLexerError, JsonPathParserError
+from pydash import py_
 from six import string_types
 
 from stackstate_etl.model.etl import (ComponentTemplate, ComponentTemplateSpec,
@@ -58,10 +60,12 @@ class BaseInterpreter:
         symtable["session"] = ctx.session
         symtable["global_session"] = ctx.global_session
         symtable["uid"] = ctx.factory.get_uid
-        symtable["py_"] = pydash
+        symtable["py_"] = py_
+        symtable["pydash"] = pydash
         symtable["datetime"] = datetime
         symtable["pytz"] = pytz
         symtable["pendulum"] = pendulum
+        symtable["networkx"] = networkx
         symtable["requests"] = requests
         symtable["pandas"] = pandas
         symtable["log"] = ctx.factory.log
