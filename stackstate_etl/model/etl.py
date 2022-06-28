@@ -23,7 +23,7 @@ class Query(Model):
 
 class ComponentTemplateSpec(Model):
     name: str = StringType(required=True)
-    component_type: str = StringType(required=True, serialized_name="type")
+    component_type: str = StringType(required=False, serialized_name="type")
     uid: str = StringType(required=True)
     layer: str = StringType()
     domain: str = StringType()

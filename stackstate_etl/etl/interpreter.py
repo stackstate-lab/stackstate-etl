@@ -340,7 +340,9 @@ class ComponentTemplateInterpreter(BaseTemplateInterpreter):
 
     def _interpret_spec(self, spec: ComponentTemplateSpec) -> Component:
         component: Component = self.ctx.component
-        component.set_type(self._get_string_property(spec.component_type, "type"))
+        ctype = self._get_string_property(spec.component_type, "type")
+        if ctype:
+            component.set_type(ctype)
         component.set_name(self._get_string_property(spec.name, "name"))
         if component.get_name() is None:
             raise Exception(
