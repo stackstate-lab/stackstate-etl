@@ -71,7 +71,7 @@ class ETLDriver:
             ctx = TopologyContext(factory=self.factory, datasources=global_datasources, global_session=global_session)
             processor.process(ctx)
 
-        unmerged_components = [c.uid for c in self.factory.components if c.mergeable]
+        unmerged_components = [c.uid for c in self.factory.components.values() if c.mergeable]
         if len(unmerged_components) > 0:
             raise Exception(
                 "Unmerged components not allowed in factory at final processing stage." f" ${unmerged_components}"
