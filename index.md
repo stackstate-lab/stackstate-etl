@@ -53,6 +53,8 @@ Python expressions or code snippets always have access to the following objects 
 | requests          | [requests](https://requests.readthedocs.io/en/latest/)             | Simple HTTP library                                               |
 | pandas            | [pandas](https://pandas.pydata.org/)                               | Data analysis and manipulation tool                               |
 | pendulum          | [pendulum](https://pendulum.eustace.io/)                           | Drop-in replacement for the standard datetime class               |
+| pydash            | [pydash](https://pydash.readthedocs.io/en/latest/)                 | Utility libraries for doing “stuff” in a functional way.          |
+| networkx          | [networkx](https://networkx.org/documentation/stable/index.html)   | Network analysis package                                          |
 | log               | [Logger](https://docs.python.org/3/library/logging.html)           | Logging                                                           |
 | `datasource name` | Any                                                                | Datasource instance as defined in ETL yaml                        |
 
