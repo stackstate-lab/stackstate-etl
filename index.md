@@ -39,7 +39,8 @@ while Json Path is evaluated using [jsonpath-ng](https://github.com/h2non/jsonpa
 
 ### Evaluation Context
 
-Python expressions or code snippets always have access to the following objects in the context,
+StackState ETL makes available handy open-source libraies to help you with your transformations when using
+Python expressions or code snippets. The context always has the following builtins available,
 
 | Name              | Type                                                               | Description                                                       | 
 |-------------------|--------------------------------------------------------------------|-------------------------------------------------------------------|
@@ -104,8 +105,10 @@ A datasource can reference any Python class that will be passed to the `init` co
 configuration. Or the `init` can create the datasource using arbitrary code.
 
 In the `my_rest_client` example, the `init` does not have to be prefixed with `|` as the framework already expects the
-property to be code.  The last line of an expression is the value that is returned.  
-Note the `my_static_client` example returns the function as the value.
+property to be code.  The last line of an expression is the value that is returned, note the `my_static_client` example
+returns the function as the value.
+
+Once the datasource is intrepreted, the datasource is available in the evalution context under the specified `name` 
 
 
 ### Query
@@ -155,6 +158,282 @@ etl:
         - nutanix_rackable_unit_template
 ```
 
+#### Processing item without using templates
+
+The `processor` can also be used to process an item from the query directly. Using the `factory` to interact with 4T
+elements.
+
+```yaml
+etl:
+  queries:
+    - name: snow_ci_relation_labels
+      query: "snow_client.get_labels()"
+      processor: |
+        ctype, uid_func = session['type_lookup'][item['class']]
+        cid = None
+        if ctype == 'nutanix-vm' and not item['name'].startswith("NTNX"):
+          cid = "urn:host:/%s" % item['name'].lower()
+        else:
+          cid = uid_func(item['name'])
+        if cid is not None and factory.component_exists(cid):
+          target_component = factory.get_component(cid)
+          target_component.properties.labels.extend(item['labels'])
+        else:
+          log.error("Failed to lookup type '%s' with name '%s' and component id '%s'" % (ctype, item['name'], cid))
+      template_refs: []
+```
+
+The above example illustrates using the result of a query to add labels to an existing component in the factory.
+
+### Templates
+
+Transforming data from a target system entails manipulation and mapping of the data to another form.
+In StackState ETL the target form is Component, Event, Metric or Health 4T element.
+
+The framework allows for the declarative definition of a __Template__ to capture the above process.
+
+```yaml
+etl:
+  template:
+    components:
+      - name: name_of_template
+        selector: "|item['class']=='disk'"
+      ...
+    health:
+      ...
+    metrics:
+      ...
+    events:
+      ...
+```
+
+Every template must have a `name` property.  An optional `selector` expression can be set to indicate whether the 
+template should be applied for the current `item` from the query. 
+
+
+### Component Template
+
+The foundational elements in the StackState [4T Model](https://docs.stackstate.com/use/concepts/4t_data_model) are
+[Components](https://docs.stackstate.com/use/concepts/components) and [Relations](https://docs.stackstate.com/use/concepts/relations)
+
+The component template offered by the framework allows for the definition of a componenent to be specified as a spec or
+as a code snippet.
+
+| Name        | Type    | Description                                                                                                                                  | 
+|-------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| uid         | string  | Required.                                                                                                                                    |
+| name        | string  | Required.                                                                                                                                    |
+| type        | string  | Required. Except when `mergeable` property set.                                                                                              |
+| layer       | string  | Optional. Defaults to global settings.                                                                                                       |
+| domain      | string  | Optional. Defaults to global settings.                                                                                                       |
+| environment | string  | Optional. Defaults to global settings.                                                                                                       |
+| labels      | list    | Optional. Can also be a string expression that resolves to a list.                                                                           |
+| identifiers | list    | Optional. Can also be a string expression that resolves to a list. `uid` is automatically added.                                             |
+| relations   | list    | Optional. `id` or `name` reference to related component. Use pipe symbol to define relation type. Use '<' to reverse relation.               |
+| processor   | code    | Optional. Process `component` object using code to set other properties.                                                                     |
+| mergeable   | boolean | Optional. Allows component to be merged into an existing component. Or act as a placeholder until another template provides final component. |
+
+#### Component Template Spec
+
+```yaml
+etl:
+  template:
+    components:
+      - name: nutanix_disk_template
+        spec:
+          name: "$.disk_hardware_config.serial_number"
+          type: "nutanix-disk"
+          uid: "|uid('nutanix', 'disk',item['diskid'])"
+          layer: "Nutanix Disks"
+          domain: "Nutanix"
+          # Note the < symbol to indicated relation reversal
+          relations: ["|'<urn:nutanix:host:/%s' % item['node_uuid']"]
+          labels:
+            - "|'prism:%s' % [jpath('$.cluster_name')]"
+          identifiers:
+            - "|'urn:nutanix:disk:/%s' % [jpath('$.disk_name')]"
+          custom_properties:
+            disk_size: "$.disk_size"
+            online: "$.online"
+```
+
+#### Component Template Code
+
+Below is the `code` snippet version of the `spec` in the previous section.
+```yaml
+etl:
+  template:
+    components:
+      - name: nutanix_disk_template
+        code: |
+          component.name = jpath("$.disk_hardware_config.serial_number")
+          component.set_type("nutanix-disk")
+          component.uid =  uid('nutanix', 'disk', item['diskid'])
+          component.properties.layer = "Nutanix Disks"
+          component.properties.domain = "Nutanix"
+          # Note the < symbol to indicated relation reversal
+          factory.add_component_relations(component, ['<urn:nutanix:host:/%s' % item['node_uuid']]
+          component.properties.add_label_kv("prism", item['cluster_name'])
+          component.properties.add_identifier('urn:nutanix:disk:/%s' % jpath('$.disk_name'))
+          component.properties.add_property("disk_size", item["disk_size"])
+          component.properties.add_property("online", jpath("$.online"))
+```
+
+#### Mergeable property
+
+It may occur that component information can be derived from serveral queries. The framework allows a component 
+to be created only once in the `factory`. This is to prevent common configuration errors. Instead the framework
+allows contributors to a component.  These components are marked with the `mergeable` property set to true.
+
+When the ETL processing comes to a final stage, the framework will check that there are not dangling components and
+throw an error if found.
+
+```yaml
+
+etl:
+  queries:
+    - name: snow_ci_relations
+      query: "snow_client.get('CI_Relationships')"
+      template_refs:
+        - snow_farm_to_host_template
+  template:
+    components:
+      - name: snow_farm_to_host_template
+        selector: "|item['class'] == 'Farm'"
+        spec:
+          mergeable: true
+          name: "$.parent"
+          uid: "|uid('nutanix', 'cluster', item['parent'])"
+          relations:
+            - "|'%s|based_on' % uid('nutanix', 'host', item['child'])"
+
+```
+
+
+### Metric Template
+
+Metrics are sent to StackState using the [Agent Check Metrics Api](https://docs.stackstate.com/develop/developer-guides/agent_check/agent-check-api#metrics).
+
+The metric template offered by the framework allows for the definition of a metric to be specified as a spec or
+as a code snippet.
+
+#### Metric Types
+
+| Metric Type | Description                                                      | 
+|-------------|------------------------------------------------------------------|
+| gauge       | Sample a gauge metric                                            |
+| count       | Sample a raw count metric                                        |
+| rate        | Sample a point, with the rate calculated at the end of the check |
+| increment   | Increment a counter metric                                       |
+| decrement   | Decrement a counter metric                                       |
+| histogram   | Sample a histogram metric                                        |
+| historate   | Sample a histogram based on rate metrics                         |
+
+#### Metric Properties
+
+| Name        | Type    | Description                                                                                                                                  | 
+|-------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| name        | string  | Required.                                                                                                                                    |
+| metric_type | string  | Required.                                                                                                                                    |
+| value       | string  | Required. Float as string                                                                                                                    |
+| target_uid  | string  | Required. The component targeted by this metric                                                                                              |
+| tags        | list    | Optional. Can also be a string expression that resolves to a list.                                                                           |
+
+#### Metric Template Spec
+
+Defining a single metric using a `spec`
+
+```yaml
+etl:
+  queries:
+    - name: nutanix_disks
+      query: "nutanix_client.get(nutanix_client.V2, 'disks')['entities']"
+      template_refs:
+        - nutanix_disk_metric_spec_template
+  template:
+    metrics:
+      - name: nutanix_disk_metric_spec_template
+        spec:
+          name: "storage.logical_usage_gb"
+          metric_type: "gauge"
+          value: "|global_session['bytesto'](item['usage_stats']['storage.logical_usage_bytes'], 'g')"
+          target_uid: "|uid('nutanix', 'disk', item['disk_uuid'])"
+
+```
+
+#### Metric Template Code
+
+In many cases, you will need to map several metrics from an `item`. The `code` option can be perfectly used for those
+cases.
+
+```yaml
+etl:
+  queries:
+    - name: nutanix_disks
+      query: "nutanix_client.get(nutanix_client.V2, 'disks')['entities']"
+      template_refs:
+        - nutanix_disk_metric_code_template
+  template:
+    metrics:
+      - name: nutanix_disk_metric_code_template
+        code: |
+          component_uid = uid('nutanix','disk', item['disk_uuid'])
+          bytesto = global_session['bytesto']
+          usage_stats = item["usage_stats"]
+          factory.add_metric_value("storage.capacity_gb", 
+                                    bytesto(usage_stats["storage.capacity_bytes"], 'g'),
+                                    target_uid=component_uid)
+          factory.add_metric_value("storage.free_gb",
+                                    bytesto(usage_stats["storage.free_bytes"], 'g'),
+                                    target_uid=component_uid)
+          factory.add_metric_value("storage.usage_gb",
+                                    bytesto(usage_stats["storage.usage_bytes"], 'g'),
+                                    target_uid=component_uid)
+```
+
+### Event Template
+
+Event are sent to StackState using the [Agent Check Event Api](https://docs.stackstate.com/develop/developer-guides/agent_check/agent-check-api#events).
+
+The eventtemplate offered by the framework allows for the definition of an event to be specified as a spec.
+
+```yaml
+etl:
+  template:
+    events:
+      - name: sample_propery_changed_event
+        spec:
+          category: "Changes"
+          event_type: "ElementPropertiesChanged"
+          msg_title: "Host Patched"
+          msg_text: "|'%s host was patched' % factory.get_component_by_name(item['name']).uid"
+          source: "nutanix"
+          source_links:
+            - title: "see in nutanix"
+              url: "|'https://%s/karbon/v1-beta.1/k8s/clusters/%s' % (nutanix_client.url, item['id'])"
+          data:
+            old:
+              patch_version: "v.1.1.0"
+            new:
+              patch_version: "v.1.1.2"
+          tags:
+            - "etl:event"
+```
+
+
+#### Event Properties
+
+| Name                | Type                    | Description                                                                                                                                  | 
+|---------------------|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| category            | string                  | Required. Valid values are Activities, Alerts, Anomalies, Changes, Others                                                                    |
+| event_type          | string                  | Describes the event being sent. This should generally end with the suffix Event, for example ConfigurationChangedEvent, VersionChangedEvent. |
+| msg_title           | string                  | Required. The title of the event.                                                                                                            |
+| msg_text            | string                  | Required. The text body of the event. Can be markdown.                                                                                       |
+| element_identifiers | list                    | These are used to bind the event to a topology element or elements.                                                                          |
+| source_links        | list of EventSourceLink | Optional. A list of links related to the event, for example a dashboard or the event in the source system.                                   |
+| source              | string                  | The name of the system from which the event originates, for example AWS, Kubernetes or JIRA                                                  |
+| data                | dict                    | Optional. Can be string that evaluates to dict. A list of key/value details about the event, for example a configuration version             |
+| tags                | list                    | Optional. Can be string that evalulates to list. A list of key/value tags to associate with the event.                                       |
 
 
 
