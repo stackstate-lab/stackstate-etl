@@ -1,0 +1,102 @@
+etl:
+  queries:
+    - name: nutanix_hosts
+      query: "|my_client()"
+      template_refs:
+        - nutanix_host_template
+  template:
+    components:
+      - name: nutanix_host_template
+        spec:
+          name: "|jpath('$.spec.name') or jpath('$.metadata.uuid')"
+          type: "nutanix-host"
+          uid: "|uid('nutanix', 'host', item['metadata']['uuid'])"
+          layer: "Nutanix Hosts"
+          custom_properties:
+            state: "$.status.state"
+            host_type: "$.status.host_type"
+            number_of_nodes: "$.num_nodes"
+            controller_vm_ip: "$.status.controller_vm.ip"
+            hypervisor_ip: "$.status.hypervisor.ip"
+            hypervisor_vm_count: "$.status.hypervisor.num_vms"
+  datasources:
+    - name: my_client
+      init: |
+        def generate_data():
+          return [{
+                "status": {
+                  "state": "COMPLETE",
+                  "name": "dm3-poc090-1",
+                  "resources": {
+                    "serial_number": "HMF198S000501",
+                    "ipmi": {
+                      "ip": "10.55.90.33"
+                    },
+                    "host_type": "HYPER_CONVERGED",
+                    "cpu_model": "Intel(R) Xeon(R) Silver 4216 CPU @ 2.10GHz",
+                    "host_nics_id_list": [ ],
+                    "num_cpu_sockets": 2,
+                    "gpu_list": [ ],
+                    "num_cpu_cores": 32,
+                    "rackable_unit_reference": {
+                      "kind": "rackable_unit",
+                      "uuid": "bf1583dc-e6cc-42de-97d2-c6419c9e4a72"
+                    },
+                    "controller_vm": {
+                      "ip": "10.55.90.29",
+                      "oplog_usage": {
+                        "oplog_disk_pct": 11.876904697670907,
+                        "oplog_disk_size": 429496729599
+                      }
+                    },
+                    "cpu_capacity_hz": 2100000000,
+                    "hypervisor": {
+                      "num_vms": 7,
+                      "ip": "10.55.90.25",
+                      "hypervisor_full_name": "Nutanix 20201105.30142"
+                    },
+                    "memory_capacity_mib": 515384,
+                    "block": {
+                      "block_serial_number": "20SM6K250199",
+                      "block_model": "NX-3060-G7"
+                    },
+                    "host_disks_reference_list": [
+                      {
+                        "kind": "disk",
+                        "uuid": "321945fe-23d0-41f9-9343-648faf502dc8"
+                      },
+                      {
+                        "kind": "disk",
+                        "uuid": "722356fe-56db-47da-a1ea-5cd7b598224d"
+                      }
+                    ]
+                  },
+                  "cluster_reference": {
+                    "kind": "cluster",
+                    "uuid": "0005e14c-38be-141f-671c-ac1f6b3b4ac8"
+                  }
+                },
+                "spec": {
+                  "name": "dm3-poc090-1",
+                  "resources": {
+                    "controller_vm": {
+                      "ip": "10.55.90.29",
+                      "oplog_usage": {
+                        "oplog_disk_pct": 11.876904697670907,
+                        "oplog_disk_size": 429496729599
+                      }
+                    }
+                  }
+                },
+                "metadata": {
+                  "last_update_time": "2022-06-13T07:20:18Z",
+                  "kind": "host",
+                  "uuid": "ed5edbbb-7428-4066-ae90-1270dcca2f37",
+                  "spec_version": 0,
+                  "creation_time": "2022-06-13T07:20:18Z",
+                  "spec_hash": "00000000000000000000000000000000000000000000000000",
+                  "categories_mapping": { },
+                  "categories": { }
+                }
+          }]
+        generate_data

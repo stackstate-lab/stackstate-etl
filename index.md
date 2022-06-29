@@ -393,9 +393,9 @@ etl:
 
 ### Event Template
 
-Event are sent to StackState using the [Agent Check Event Api](https://docs.stackstate.com/develop/developer-guides/agent_check/agent-check-api#events).
+Events are sent to StackState using the [Agent Check Event Api](https://docs.stackstate.com/develop/developer-guides/agent_check/agent-check-api#events).
 
-The eventtemplate offered by the framework allows for the definition of an event to be specified as a spec.
+The event template offered by the framework allows for the definition of an event to be specified as a spec.
 
 ```yaml
 etl:
@@ -436,8 +436,53 @@ etl:
 | tags                | list                    | Optional. Can be string that evalulates to list. A list of key/value tags to associate with the event.                                       |
 
 
+### Health Template
+
+Health is synchronized with StackState using the [Health-Synchronization](https://docs.stackstate.com/configure/health/health-synchronization) mechanism.
+
+The health template offered by the framework allows for the definition of a heath sync state to be specified as a spec.
+
+```yaml
+etl:
+  queries:
+    - name: nutanix_disks
+      query: "nutanix_client.get(nutanix_client.V2, 'disks')['entities']"
+      template_refs:
+        - nutanix_disk_online_template
+  template:
+    health:
+      - name: nutanix_disk_online_template
+        spec:
+          check_id: "|'%s_online' % item['disk_uuid']"
+          check_name: "DiskOnline"
+          topo_identifier: "|uid('nutanix', 'disk', item['disk_uuid'])"
+          health: "|'CLEAR' if item['online'] else 'WARNING'"
+          message: "|'Disk Status is %s' % item['disk_status']"
+```
+
+
+#### Health Properties
+
+| Name            | Type                    | Description                                                                                                                      | 
+|-----------------|-------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| check_id        | string                  | Required. Identifier for the check state in the external system                                                                  |
+| check_name      | string                  | Required. Name of the external check state.                                                                                      |
+| topo_identifier | string                  | Required. Used to bind the check state to a StackState topology element.                                                         |
+| message         | string                  | Optional. Message to display in StackState UI. Data will be interpreted as markdown                                              |
+| health          | string                  | Required. One of the following StackState Health state values: Clear, Deviating, Critical.                                       |
+
+
+## Modularity 
+
+Writing yaml definitions can become unmanageable if done in a single file.  When writing definitions in multiple files,
+duplication can become an issue.  StackState ETL framework has a few mechanism's available to prevent these issues.  
 
 ### Refs
+
+Multiple ETL definition files can easily be composed using `refs` target definitions can be in directories or in python
+modules. Nested `refs` are allowed. ETL definitions are executed in the order they are loaded in.
+When the ref points to a folder, alphabetical order is applied to yamls before loading.
+
 
 ```yaml
 etl:
@@ -446,7 +491,7 @@ etl:
   ...
 ```
 
-`refs` is a list of paths referencing other ETL models. The paths have the format of `<prefix>://<dir or file>`
+`refs` is a list of paths referencing other ETL definitions. The paths have the format of `<prefix>://<dir or file>`
 
 | Prefix      | Description                                     |
 |-------------|-------------------------------------------------|
@@ -456,6 +501,12 @@ etl:
 
 ### Pre- and Post- Processors
 
+At times you may need to define utility functions for use by templates, or you may want to process all
+components in the factory after all queries in the ETL definition have been executed. Adding common labels for example.
+Pre- / Post-processors can be used for these cases. Note that these are scoped to running only within
+the ETL definition they are found in. Processors can use [Scopes](#scopes) to contribute functions.
+
+
 ```yaml
 etl:
   ...
@@ -471,105 +522,93 @@ etl:
         global_session["bytesto"] = bytesto
 ```
 
-
-
-
-### Templates
-#### Components
-#### Metrics
-#### Health
-#### Events
-
-
-
-
-## ETL Model Old
-The datasources are used by query definitions to fetch rows of data.  For each row of data, several templates can be
-defined to transform the row into a 4T model element.  Supported elements are Component, Event, Metric, Health.
-
-The property on definitions can have an expression to derive its final value.  
-
-Processors (code snippets) can be defined at various levels to help with the extraction and transformation of data.
-
-Refs are used to refer to other ETL models for modularity.
- 
-
-### Sample ETL Yaml Definition
+The example above shows a conversion function that can convert bytes to kilobytes, gigabytes, etc.
+Any code expression can access this function to perform the conversion.
 
 ```yaml
-etl:
-  refs:
-    - "module_dir://sts_nutanix_impl.templates"
-  pre_processors:
-    - name: convert_bytes_function
-      code: |
-        def bytesto(bytes, to, bsize=1024):
-            a = {'k' : 1, 'm': 2, 'g' : 3, 't' : 4, 'p' : 5, 'e' : 6 }
-            r = float(bytes)
-            for i in range(a[to]):
-                r = r / bsize
-            return(r)
-        global_session["bytesto"] = bytesto
-  datasources:
-    - name: nutanix_client
-      module: sts_nutanix_impl.client.nutanix_client
-      cls: NutanixClient
-      init: "NutanixClient(conf.nutanix, log)"
-  queries:
-    - name: nutanix_disks
-      query: "nutanix_client.get(nutanix_client.V2, 'disks')['entities']"
-      template_refs:
-        - nutanix_disk_template
-        - nutanix_disk_online_template
-        - nutanix_disk_metric_spec_template
-        - nutanix_disk_metric_code_template
-  template:
-    components:
-      - name: nutanix_disk_template
-        spec:
-          name: "$.disk_hardware_config.serial_number"
-          type: "nutanix-disk"
-          uid: "|uid('nutanix', 'disk', item['disk_uuid'])"
-          layer: "Nutanix Disks"
-          labels:
-            - "|'prism_cluster:%s' % global_session['cluster_lookup'][jpath('$.cluster_uuid')]"
-          custom_properties:
-            model: "$.disk_hardware_config.model"
-            current_firmware_version: "$.disk_hardware_config.current_firmware_version"
-          relations: ["|'<urn:nutanix:host:/%s' % item['node_uuid']"]
-    health:
-      - name: nutanix_disk_online_template
-        spec:
-          check_id: "|'%s_online' % item['disk_uuid']"
-          check_name: "DiskOnline"
-          topo_identifier: "|uid('nutanix', 'disk', item['disk_uuid'])"
-          health: "|'CLEAR' if item['online'] else 'WARNING'"
-          message: "|'Disk Status is %s' % item['disk_status']"
-    metrics:
-      - name: nutanix_disk_metric_spec_template
-        spec:
-          name: "storage.logical_usage_gb"
-          metric_type: "gauge"
-          value: "|global_session['bytesto'](item['usage_stats']['storage.logical_usage_bytes'], 'g')"
-          target_uid: "|uid('nutanix', 'disk', item['disk_uuid'])"
-      - name: nutanix_disk_metric_code_template
-        code: |
-          component_uid = uid('nutanix','disk', item['disk_uuid'])
-          bytesto = global_session['bytesto']
-          usage_stats = item["usage_stats"]
-          factory.add_metric_value("storage.capacity_gb", 
-                                    bytesto(usage_stats["storage.capacity_bytes"], 'g'),
-                                    target_uid=component_uid)
-
+value: "|global_session['bytesto'](item['usage_stats']['storage.logical_usage_bytes'], 'g')"
 ```
 
-### ETL Execution Logic
+### Scopes
+
+A `session` scope and a `global_session` scope is available. `session` is only valid with the ETL definition.
+
+
+## ETL Execution Flow
+
+The sequence diagram shows the basic execution logic for processing ETL definitions.
 
 ![Sequence Diagram](docs/img/sequence_diagram.svg)
 
 
-
 ## Commandline Utility
+
+### Installation
+On your local machine setup a virtual environment
+```bash
+$ # Install virtual env
+$ pip install virtualenv
+$ virtualenv --version
+$ # Create a virtual environment in a directory of your choosing 
+$ cd project_folder
+$ virtualenv venv
+$ source venv/bin/activate
+```
+
+Now install the `stsetl` utility.
+
+```bash
+pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/0.1.0/stackstate-etl-0.1.0.tar.gz
+```
+
+The `ststetl` command-line utility reads ETL yaml files specified in the `conf.yaml` and sends the resulting 4T elements
+to StackState.
+
+```bash
+$ stsetl --help
+Usage: stsetl [OPTIONS]
+
+Options:
+  -f, --conf  TEXT  Configuration yaml file
+  --log-level TEXT  Log Level
+  --dry-run         Dry run static topology creation
+  --work-dir  TEXT  Set the current working directory
+  --help            Show this message and exit.
+```
+
+### Configuration
+
+Create a `conf.yaml` similar to the one below. Remember to change the `receiver_url` and `api_key`
+
+```yaml
+
+stackstate:
+  receiver_url: https://<your stackstate server>/receiver
+  api_key: xxxxx
+  #  use as the source identifier and url in StackState integrations when creating a Custom Synchronzation instance.
+  instance_type: stackstate_etl
+  instance_url: stackstate_etl_demo
+  health_sync:
+    source_name: static_health
+    stream_id: "static_health_topo"   # unique id representing this stream instance
+    expiry_interval_seconds: 2592000  # 30 Days
+    repeat_interval_seconds: 1800     # 30 Minutes
+  internal_hostname: localhost
+
+etl:
+  refs:
+    - "file://./templates"
+```
+
+Create a sample template and dry run to see resulting Components, Relations and Health
+You can copy [sample_etl.yaml](./tests/sample_etl.yaml) to `./templates`
+
+```bash
+$ mkdir -p ./templates
+$ curl -L https://raw.githubusercontent.com/stackstate-lab/stackstate-etl/master/tests/sample_etl.yaml -o ./template/sample_etl.yaml
+$ stsetl --dry-run   
+```
+
 ## Installation on Python 2.7
 
 StackState Agent 2 supports python 2.7.  StackState ETL is transpiled to python 2.7 code.
