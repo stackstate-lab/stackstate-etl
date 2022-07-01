@@ -1,14 +1,26 @@
-remote_theme: just-the-docs/just-the-docs
+theme: "just-the-docs"
+url: http://localhost:4000/
+  
 title: StackState ETL
 description: >- 
   This site is for the documentation of StackState ETL framework
 
-baseurl: "/stackstate-etl" # the subpath of your site, e.g. /blog
-url: "https://stackstate-lab.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-
 aux_links:
   "StackState ETL on GitHub":
     - "//github.com/stackstate-lab/stackstate-etl"
+  
+compress_html:
+  # clippings: all
+  # comments: all
+  # endings: all
+  # startings: []
+  blanklines: true
+  # profile: false
+  # ignore:
+  #   envs: all
+
+exclude: []
+
 
 # Back to top link
 back_to_top: true
