@@ -78,7 +78,7 @@ etl:
 ```
 
 Create a sample template and dry run to see resulting Components, Relations and Health
-You can copy [sample_etl.yaml](./tests/sample_etl.yaml) to `./templates`
+You can copy [sample_etl.yaml](https://raw.githubusercontent.com/stackstate-lab/stackstate-etl/master/tests/sample_etl.yaml) to `./templates`
 
 ```bash
 $ mkdir -p ./templates
