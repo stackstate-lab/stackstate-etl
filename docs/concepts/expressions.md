@@ -28,7 +28,7 @@ Python expressions or code snippets. The context always has the following builti
 
 | Name              | Type                                                               | Description                                                       | 
 |-------------------|--------------------------------------------------------------------|-------------------------------------------------------------------|
-| factory           | [TopologyFactory](./docs/static/stackstate_etl/model/factory.html) | Registry for 4T elements                                          |
+| factory           | [TopologyFactory](../static/stackstate_etl/model/factory.html) | Registry for 4T elements                                          |
 | jpath             | function                                                           | Accepts a json path expression to evaluate against current `item` |
 | session           | dict                                                               | Dictionary that exists on within the current ETL definition       |
 | global_session    | dict                                                               | Dictionary that exists across all ETL definitions                 |
