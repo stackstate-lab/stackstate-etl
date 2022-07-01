@@ -188,7 +188,7 @@ class ETLProcessor:
         interpreter = DataSourceInterpreter(ctx)
         for ds in self.etl.datasources:
             if ds.name not in ctx.datasources:
-                interpreter.interpret(ds, self.conf, self.log)
+                interpreter.interpret(ds, self.conf)
 
     @staticmethod
     def _get_query_result(ctx: TopologyContext, query: Query) -> List[Dict[str, Any]]:

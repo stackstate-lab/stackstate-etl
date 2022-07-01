@@ -1,6 +1,5 @@
 import datetime
 import importlib
-from logging import Logger
 from typing import Any, Dict, List, Optional, Union
 
 import attr
@@ -127,7 +126,7 @@ class DataSourceInterpreter(BaseInterpreter):
     def __init__(self, ctx: TopologyContext):
         BaseInterpreter.__init__(self, ctx)
 
-    def interpret(self, datasource: DataSource, instance_info: InstanceInfo, log: Logger) -> object:
+    def interpret(self, datasource: DataSource, instance_info: InstanceInfo) -> object:
         self.source_name = f"datasource '{datasource.name}'"
         ds_class = None
         if datasource.module and datasource.cls:
@@ -273,7 +272,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
                     f"Failed to evaluate property '{name}' for '{self.source_name}' on template `{self.template_name}`."
                     f" Expression |\n {expression} \n |.\n Errors:\n {str(e)}"
                 )
-        elif expression.startswith("|") or force_eval or '\n' in expression:
+        elif expression.startswith("|") or force_eval or "\n" in expression:
             result = self._run_code(expression, name)
             if result is None:
                 return default
@@ -292,7 +291,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
             if isinstance(value, string_types) or isinstance(value, int):
                 try:
                     return float(value)
-                except Exception:
+                except ValueError:
                     self._raise_assert_error(value, name, "float")
             elif not isinstance(value, float):
                 self._raise_assert_error(value, name, "float")
