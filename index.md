@@ -561,7 +561,7 @@ Now install the `stsetl` utility.
 pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/0.1.0/stackstate-etl-0.1.0.tar.gz
 ```
 
-The `ststetl` command-line utility reads ETL yaml files specified in the `conf.yaml` and sends the resulting 4T elements
+The `stsetl` command-line utility reads ETL yaml files specified in the `conf.yaml` and sends the resulting 4T elements
 to StackState.
 
 ```bash
@@ -589,8 +589,8 @@ stackstate:
   instance_type: stackstate_etl
   instance_url: stackstate_etl_demo
   health_sync:
-    source_name: static_health
-    stream_id: "static_health_topo"   # unique id representing this stream instance
+    source_name: elt_health
+    stream_id: "etl_health_topo"   # unique id representing this stream instance
     expiry_interval_seconds: 2592000  # 30 Days
     repeat_interval_seconds: 1800     # 30 Minutes
   internal_hostname: localhost

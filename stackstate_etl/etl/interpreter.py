@@ -273,7 +273,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
                     f"Failed to evaluate property '{name}' for '{self.source_name}' on template `{self.template_name}`."
                     f" Expression |\n {expression} \n |.\n Errors:\n {str(e)}"
                 )
-        elif expression.startswith("|") or force_eval:
+        elif expression.startswith("|") or force_eval or '\n' in expression:
             result = self._run_code(expression, name)
             if result is None:
                 return default
