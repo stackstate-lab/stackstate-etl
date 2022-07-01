@@ -28,17 +28,18 @@
 </summary>
 <pre><code class="python">import datetime
 import importlib
-import math
-from logging import Logger
 from typing import Any, Dict, List, Optional, Union
 
 import attr
+import networkx
 import pandas
+import pendulum
 import pydash
 import pytz
 import requests
 from asteval import Interpreter
 from jsonpath_ng.exceptions import JsonPathLexerError, JsonPathParserError
+from pydash import py_
 from six import string_types
 
 from stackstate_etl.model.etl import (ComponentTemplate, ComponentTemplateSpec,
@@ -86,10 +87,12 @@ class BaseInterpreter:
         symtable[&#34;session&#34;] = ctx.session
         symtable[&#34;global_session&#34;] = ctx.global_session
         symtable[&#34;uid&#34;] = ctx.factory.get_uid
-        symtable[&#34;py_&#34;] = pydash
+        symtable[&#34;py_&#34;] = py_
+        symtable[&#34;pydash&#34;] = pydash
         symtable[&#34;datetime&#34;] = datetime
         symtable[&#34;pytz&#34;] = pytz
-        symtable[&#34;math&#34;] = math
+        symtable[&#34;pendulum&#34;] = pendulum
+        symtable[&#34;networkx&#34;] = networkx
         symtable[&#34;requests&#34;] = requests
         symtable[&#34;pandas&#34;] = pandas
         symtable[&#34;log&#34;] = ctx.factory.log
@@ -151,7 +154,7 @@ class DataSourceInterpreter(BaseInterpreter):
     def __init__(self, ctx: TopologyContext):
         BaseInterpreter.__init__(self, ctx)
 
-    def interpret(self, datasource: DataSource, instance_info: InstanceInfo, log: Logger) -&gt; object:
+    def interpret(self, datasource: DataSource, instance_info: InstanceInfo) -&gt; object:
         self.source_name = f&#34;datasource &#39;{datasource.name}&#39;&#34;
         ds_class = None
         if datasource.module and datasource.cls:
@@ -297,7 +300,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
                     f&#34;Failed to evaluate property &#39;{name}&#39; for &#39;{self.source_name}&#39; on template `{self.template_name}`.&#34;
                     f&#34; Expression |\n {expression} \n |.\n Errors:\n {str(e)}&#34;
                 )
-        elif expression.startswith(&#34;|&#34;) or force_eval:
+        elif expression.startswith(&#34;|&#34;) or force_eval or &#34;\n&#34; in expression:
             result = self._run_code(expression, name)
             if result is None:
                 return default
@@ -316,7 +319,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
             if isinstance(value, string_types) or isinstance(value, int):
                 try:
                     return float(value)
-                except Exception:
+                except ValueError:
                     self._raise_assert_error(value, name, &#34;float&#34;)
             elif not isinstance(value, float):
                 self._raise_assert_error(value, name, &#34;float&#34;)
@@ -364,7 +367,9 @@ class ComponentTemplateInterpreter(BaseTemplateInterpreter):
 
     def _interpret_spec(self, spec: ComponentTemplateSpec) -&gt; Component:
         component: Component = self.ctx.component
-        component.set_type(self._get_string_property(spec.component_type, &#34;type&#34;))
+        ctype = self._get_string_property(spec.component_type, &#34;type&#34;)
+        if ctype:
+            component.set_type(ctype)
         component.set_name(self._get_string_property(spec.name, &#34;name&#34;))
         if component.get_name() is None:
             raise Exception(
@@ -562,10 +567,12 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
         symtable[&#34;session&#34;] = ctx.session
         symtable[&#34;global_session&#34;] = ctx.global_session
         symtable[&#34;uid&#34;] = ctx.factory.get_uid
-        symtable[&#34;py_&#34;] = pydash
+        symtable[&#34;py_&#34;] = py_
+        symtable[&#34;pydash&#34;] = pydash
         symtable[&#34;datetime&#34;] = datetime
         symtable[&#34;pytz&#34;] = pytz
-        symtable[&#34;math&#34;] = math
+        symtable[&#34;pendulum&#34;] = pendulum
+        symtable[&#34;networkx&#34;] = networkx
         symtable[&#34;requests&#34;] = requests
         symtable[&#34;pandas&#34;] = pandas
         symtable[&#34;log&#34;] = ctx.factory.log
@@ -715,7 +722,7 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
                     f&#34;Failed to evaluate property &#39;{name}&#39; for &#39;{self.source_name}&#39; on template `{self.template_name}`.&#34;
                     f&#34; Expression |\n {expression} \n |.\n Errors:\n {str(e)}&#34;
                 )
-        elif expression.startswith(&#34;|&#34;) or force_eval:
+        elif expression.startswith(&#34;|&#34;) or force_eval or &#34;\n&#34; in expression:
             result = self._run_code(expression, name)
             if result is None:
                 return default
@@ -734,7 +741,7 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
             if isinstance(value, string_types) or isinstance(value, int):
                 try:
                     return float(value)
-                except Exception:
+                except ValueError:
                     self._raise_assert_error(value, name, &#34;float&#34;)
             elif not isinstance(value, float):
                 self._raise_assert_error(value, name, &#34;float&#34;)
@@ -823,7 +830,9 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
 
     def _interpret_spec(self, spec: ComponentTemplateSpec) -&gt; Component:
         component: Component = self.ctx.component
-        component.set_type(self._get_string_property(spec.component_type, &#34;type&#34;))
+        ctype = self._get_string_property(spec.component_type, &#34;type&#34;)
+        if ctype:
+            component.set_type(ctype)
         component.set_name(self._get_string_property(spec.name, &#34;name&#34;))
         if component.get_name() is None:
             raise Exception(
@@ -913,7 +922,7 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
     def __init__(self, ctx: TopologyContext):
         BaseInterpreter.__init__(self, ctx)
 
-    def interpret(self, datasource: DataSource, instance_info: InstanceInfo, log: Logger) -&gt; object:
+    def interpret(self, datasource: DataSource, instance_info: InstanceInfo) -&gt; object:
         self.source_name = f&#34;datasource &#39;{datasource.name}&#39;&#34;
         ds_class = None
         if datasource.module and datasource.cls:
@@ -956,7 +965,7 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
 <h3>Methods</h3>
 <dl>
 <dt id="stackstate_etl.etl.interpreter.DataSourceInterpreter.interpret"><code class="name flex">
-<span>def <span class="ident">interpret</span></span>(<span>self, datasource: <a title="stackstate_etl.model.etl.DataSource" href="../model/etl.html#stackstate_etl.model.etl.DataSource">DataSource</a>, instance_info: <a title="stackstate_etl.model.instance.InstanceInfo" href="../model/instance.html#stackstate_etl.model.instance.InstanceInfo">InstanceInfo</a>, log: logging.Logger) ‑> object</span>
+<span>def <span class="ident">interpret</span></span>(<span>self, datasource: <a title="stackstate_etl.model.etl.DataSource" href="../model/etl.html#stackstate_etl.model.etl.DataSource">DataSource</a>, instance_info: <a title="stackstate_etl.model.instance.InstanceInfo" href="../model/instance.html#stackstate_etl.model.instance.InstanceInfo">InstanceInfo</a>) ‑> object</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -964,7 +973,7 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def interpret(self, datasource: DataSource, instance_info: InstanceInfo, log: Logger) -&gt; object:
+<pre><code class="python">def interpret(self, datasource: DataSource, instance_info: InstanceInfo) -&gt; object:
     self.source_name = f&#34;datasource &#39;{datasource.name}&#39;&#34;
     ds_class = None
     if datasource.module and datasource.cls:

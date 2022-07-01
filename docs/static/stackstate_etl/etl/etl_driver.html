@@ -99,6 +99,12 @@ class ETLDriver:
             ctx = TopologyContext(factory=self.factory, datasources=global_datasources, global_session=global_session)
             processor.process(ctx)
 
+        unmerged_components = [c.uid for c in self.factory.components.values() if c.mergeable]
+        if len(unmerged_components) &gt; 0:
+            raise Exception(
+                &#34;Unmerged components not allowed in factory at final processing stage.&#34; f&#34; ${unmerged_components}&#34;
+            )
+
     def _init_template_lookup(self) -&gt; TemplateLookup:
         lookup = TemplateLookup()
         for model in self.models:
@@ -210,7 +216,7 @@ class ETLProcessor:
         interpreter = DataSourceInterpreter(ctx)
         for ds in self.etl.datasources:
             if ds.name not in ctx.datasources:
-                interpreter.interpret(ds, self.conf, self.log)
+                interpreter.interpret(ds, self.conf)
 
     @staticmethod
     def _get_query_result(ctx: TopologyContext, query: Query) -&gt; List[Dict[str, Any]]:
@@ -254,6 +260,12 @@ class ETLProcessor:
             processor = ETLProcessor(model, self.template_lookup, self.conf, self.factory, self.log)
             ctx = TopologyContext(factory=self.factory, datasources=global_datasources, global_session=global_session)
             processor.process(ctx)
+
+        unmerged_components = [c.uid for c in self.factory.components.values() if c.mergeable]
+        if len(unmerged_components) &gt; 0:
+            raise Exception(
+                &#34;Unmerged components not allowed in factory at final processing stage.&#34; f&#34; ${unmerged_components}&#34;
+            )
 
     def _init_template_lookup(self) -&gt; TemplateLookup:
         lookup = TemplateLookup()
@@ -311,7 +323,13 @@ class ETLProcessor:
     for model in self.models:
         processor = ETLProcessor(model, self.template_lookup, self.conf, self.factory, self.log)
         ctx = TopologyContext(factory=self.factory, datasources=global_datasources, global_session=global_session)
-        processor.process(ctx)</code></pre>
+        processor.process(ctx)
+
+    unmerged_components = [c.uid for c in self.factory.components.values() if c.mergeable]
+    if len(unmerged_components) &gt; 0:
+        raise Exception(
+            &#34;Unmerged components not allowed in factory at final processing stage.&#34; f&#34; ${unmerged_components}&#34;
+        )</code></pre>
 </details>
 </dd>
 </dl>
@@ -397,7 +415,7 @@ class ETLProcessor:
         interpreter = DataSourceInterpreter(ctx)
         for ds in self.etl.datasources:
             if ds.name not in ctx.datasources:
-                interpreter.interpret(ds, self.conf, self.log)
+                interpreter.interpret(ds, self.conf)
 
     @staticmethod
     def _get_query_result(ctx: TopologyContext, query: Query) -&gt; List[Dict[str, Any]]:
