@@ -28,7 +28,7 @@ real world example of using StackState ETL.
 ## ETL Declaration
 
 The framework uses a mix of yaml structures that can have dynamic expressions to derive the final values. The
-[Concepts](./docs/concepts.md) section will elaborate further on the structures and their purpose. 
+[Concepts](./docs/concepts.html) section will elaborate further on the structures and their purpose. 
 
 ```yaml
 etl:
