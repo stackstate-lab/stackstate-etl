@@ -8,6 +8,7 @@ import pandas
 import pendulum
 import pydash
 import pytz
+import re
 import requests
 from asteval import Interpreter
 from jsonpath_ng.exceptions import JsonPathLexerError, JsonPathParserError
@@ -65,6 +66,7 @@ class BaseInterpreter:
         symtable["pytz"] = pytz
         symtable["pendulum"] = pendulum
         symtable["networkx"] = networkx
+        symtable["re"] = re
         symtable["requests"] = requests
         symtable["pandas"] = pandas
         symtable["log"] = ctx.factory.log
