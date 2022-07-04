@@ -35,6 +35,7 @@ Python expressions or code snippets. The context always has the following builti
 | uid               | function                                                           | Used to create ids. See TopologyFactory.get_uid(...)              |
 | datetime          | [datetime](https://docs.python.org/3/library/datetime.html)        | Module supplies classes for manipulating dates and times.         |
 | pytz              | [pytz](https://pythonhosted.org/pytz/)                             | Library allows accurate and cross platform timezone calculations  |
+| re                | [re](https://docs.python.org/3/library/re.html)                    | Regurlar expression library                                       |
 | requests          | [requests](https://requests.readthedocs.io/en/latest/)             | Simple HTTP library                                               |
 | pandas            | [pandas](https://pandas.pydata.org/)                               | Data analysis and manipulation tool                               |
 | pendulum          | [pendulum](https://pendulum.eustace.io/)                           | Drop-in replacement for the standard datetime class               |
