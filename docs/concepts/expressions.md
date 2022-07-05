@@ -30,7 +30,7 @@ Python expressions or code snippets. The context always has the following builti
 |-------------------|--------------------------------------------------------------------|-------------------------------------------------------------------|
 | factory           | [TopologyFactory](../static/stackstate_etl/model/factory.html) | Registry for 4T elements                                          |
 | jpath             | function                                                           | Accepts a json path expression to evaluate against current `item` |
-| session           | dict                                                               | Dictionary that exists on within the current ETL definition       |
+| session           | dict                                                               | Dictionary that exists only within the current ETL definition     |
 | global_session    | dict                                                               | Dictionary that exists across all ETL definitions                 |
 | uid               | function                                                           | Used to create ids. See TopologyFactory.get_uid(...)              |
 | datetime          | [datetime](https://docs.python.org/3/library/datetime.html)        | Module supplies classes for manipulating dates and times.         |
@@ -53,7 +53,7 @@ As the framework processes rows of data, temporary objects become available depe
 | Name              | Type                                                                                                          | Description                           | 
 |-------------------|---------------------------------------------------------------------------------------------------------------|---------------------------------------|
 | item              | dict                                                                                                          | Dict. Current row from extracted data |
-| component         | [Compoment](./docs/static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.Component)     | Optional                              |
-| metric            | [Metric](./docs/static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.Metric)           | Optional                              |
-| event             | [Event](./docs/static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.Event)             | Optional                              |
-| health            | [Health](./docs/static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.HealthCheckState) | Optional                              |
+| component         | [Component](../static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.Component)     | Optional                              |
+| metric            | [Metric](../static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.Metric)           | Optional                              |
+| event             | [Event](../static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.Event)             | Optional                              |
+| health            | [Health](../static/stackstate_etl/model/stackstate.html#stackstate_etl.model.stackstate.HealthCheckState) | Optional                              |
