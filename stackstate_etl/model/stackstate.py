@@ -133,7 +133,7 @@ class Component(Model):
         self.properties.custom_properties.update(source.properties.custom_properties)
 
 
-HEALTH_STATE_CHOICES = ["CLEAR", "DEVIATING", "CRITICAL"]
+HEALTH_STATE_CHOICES = ["CLEAR", "DEVIATING", "CRITICAL", "UNKNOWN"]
 
 
 class HealthCheckState(Model):

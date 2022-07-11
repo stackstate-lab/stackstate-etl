@@ -1,5 +1,6 @@
 import datetime
 import importlib
+import re
 from typing import Any, Dict, List, Optional, Union
 
 import attr
@@ -8,7 +9,6 @@ import pandas
 import pendulum
 import pydash
 import pytz
-import re
 import requests
 from asteval import Interpreter
 from jsonpath_ng.exceptions import JsonPathLexerError, JsonPathParserError
@@ -493,15 +493,15 @@ class HeathTemplateInterpreter(BaseTemplateInterpreter):
         if health.topo_identifier is None:
             raise Exception(f"Template {template.name} health topo_identifier required.")
 
-        health.message = self._get_string_property(spec.message, "message", "")
+        health.health = self._get_string_property(spec.health, "health", "")
+        if spec.message is not None:
+            health.message = self._get_string_property(spec.message, "message", "")
 
-        health_status = self._get_string_property(spec.health, "health", "")
-        if health_status not in HEALTH_STATE_CHOICES:
+        if health.health not in HEALTH_STATE_CHOICES:
             raise Exception(
-                f"Template {template.name} health '{health_status}' not allowed. "
+                f"Template {template.name} health '{health.health}' not allowed. "
                 f"Valid values {HEALTH_STATE_CHOICES}."
             )
 
-        health.health = health_status
         self.ctx.factory.add_health(health)
         return health

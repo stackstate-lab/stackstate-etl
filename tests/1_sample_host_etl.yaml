@@ -1,7 +1,7 @@
 etl:
   queries:
     - name: nutanix_hosts
-      query: "|my_client()"
+      query: "|my_host_client()"
       template_refs:
         - nutanix_host_template
   template:
@@ -20,7 +20,7 @@ etl:
             hypervisor_ip: "$.status.hypervisor.ip"
             hypervisor_vm_count: "$.status.hypervisor.num_vms"
   datasources:
-    - name: my_client
+    - name: my_host_client
       init: |
         def generate_data():
           return [{

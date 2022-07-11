@@ -12,8 +12,11 @@ logger.setLevel(logging.INFO)
 def test_processing_sample():
     conf = InstanceInfo()
     conf.etl = ETL()
-    conf.etl.refs = ["file://./tests/sample_etl.yaml"]
+    conf.etl.refs = ["file://./tests/1_sample_host_etl.yaml", "file://./tests/2_sample_disk_etl.yaml"]
     factory = TopologyFactory()
     driver = ETLDriver(conf, factory, logger)
     driver.process()
-    assert len(factory.components) == 1
+    assert len(factory.components) == 2
+    assert len(factory.relations) == 1
+    assert len(factory.health) == 1
+    assert len(factory.metrics) == 2

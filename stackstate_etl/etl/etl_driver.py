@@ -76,6 +76,7 @@ class ETLDriver:
             raise Exception(
                 "Unmerged components not allowed in factory at final processing stage." f" ${unmerged_components}"
             )
+        self.factory.resolve_relations()
 
     def _init_template_lookup(self) -> TemplateLookup:
         lookup = TemplateLookup()

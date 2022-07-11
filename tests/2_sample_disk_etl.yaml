@@ -1,0 +1,180 @@
+etl:
+  queries:
+    - name: nutanix_disks
+      query: "|my_client()"
+      template_refs:
+        - nutanix_disk_template
+        - nutanix_disk_online_template
+        - nutanix_disk_metric_spec_template
+        - nutanix_disk_metric_code_template
+  template:
+    components:
+      - name: nutanix_disk_template
+        spec:
+          name: "$.disk_hardware_config.serial_number"
+          type: "nutanix-disk"
+          uid: "|uid('nutanix', 'disk', item['disk_uuid'])"
+          layer: "Nutanix Disks"
+          relations: ["|'<urn:nutanix:host:/%s' % item['node_uuid']"]
+          custom_properties:
+            disk_size: "$.disk_size"
+            online: "$.online"
+            storage_tier_name: "$.storage_tier_name"
+    health:
+      - name: nutanix_disk_online_template
+        spec:
+          check_id: "|'%s_online' % item['disk_uuid']"
+          check_name: "DiskOnline"
+          topo_identifier: "|uid('nutanix', 'disk', item['disk_uuid'])"
+          health: "|'CLEAR' if item['online'] else 'WARNING'"
+          message: "|'Disk Status is %s' % item['disk_status']"
+    metrics:
+      - name: nutanix_disk_metric_spec_template
+        spec:
+          name: "storage.logical_usage_gb"
+          metric_type: "gauge"
+          value: "|global_session['bytesto'](item['usage_stats']['storage.logical_usage_bytes'], 'g')"
+          target_uid: "|uid('nutanix', 'disk', item['disk_uuid'])"
+      - name: nutanix_disk_metric_code_template
+        code: |
+          component_uid = uid('nutanix','disk', item['disk_uuid'])
+          bytesto = global_session['bytesto']
+          usage_stats = item["usage_stats"]
+          factory.add_metric_value("storage.capacity_gb", 
+                                    bytesto(usage_stats["storage.capacity_bytes"], 'g'),
+                                    target_uid=component_uid)
+  pre_processors:
+    - name: convert_bytes_function
+      code: |
+        def bytesto(bytes, to, bsize=1024):
+            a = {'k' : 1, 'm': 2, 'g' : 3, 't' : 4, 'p' : 5, 'e' : 6 }
+            r = float(bytes)
+            for i in range(a[to]):
+                r = r / bsize
+            return(r)
+        global_session["bytesto"] = bytesto
+  datasources:
+    - name: my_client
+      init: |
+        def generate_data():
+          return [
+             {
+                "id": "0005e14c-38be-141f-671c-ac1f6b3b4ac8::59",
+                "disk_uuid": "0a7bf990-6ab0-407a-b1ac-5c99c029a03d",
+                "cluster_uuid": "0005e14c-38be-141f-671c-ac1f6b3b4ac8",
+                "storage_tier_name": "SSD",
+                "service_vmid": "0005e14c-38be-141f-671c-ac1f6b3b4ac8::8",
+                "node_uuid": "da249120-a63b-4050-990a-2d00b4cb1255",
+                "last_service_vmid": None,
+                "last_node_uuid": None,
+                "host_name": "10.55.90.27",
+                "cvm_ip_address": "10.55.90.31",
+                "node_name": "dm3-poc090-3",
+                "mount_path": "/home/nutanix/data/stargate-storage/disks/S455NA0N320582",
+                "disk_size": 1509153013618,
+                "marked_for_removal": False,
+                "data_migrated": False,
+                "online": True,
+                "disk_status": "NORMAL",
+                "location": 1,
+                "self_managed_nvme": False,
+                "self_encrypting_drive": False,
+                "disk_hardware_config": {
+                  "serial_number": "S455NA0N320582",
+                  "disk_id": "0005e14c-38be-141f-671c-ac1f6b3b4ac8::59",
+                  "disk_uuid": "0a7bf990-6ab0-407a-b1ac-5c99c029a03d",
+                  "location": 1,
+                  "bad": False,
+                  "mounted": True,
+                  "mount_path": "/home/nutanix/data/stargate-storage/disks/S455NA0N320582",
+                  "model": "SAMSUNG MZ7LH1T9HMLT-00005",
+                  "vendor": "Not Available",
+                  "boot_disk": True,
+                  "only_boot_disk": False,
+                  "under_diagnosis": False,
+                  "background_operation": None,
+                  "current_firmware_version": "804Q",
+                  "target_firmware_version": "804Q",
+                  "can_add_as_new_disk": False,
+                  "can_add_as_old_disk": False
+                },
+                "dynamic_ring_changing_node": None,
+                "stats": {
+                  "hypervisor_avg_io_latency_usecs": "-1",
+                  "num_read_iops": "0",
+                  "hypervisor_write_io_bandwidth_kBps": "-1",
+                  "timespan_usecs": "30000000",
+                  "controller_num_read_iops": "-1",
+                  "read_io_ppm": "269230",
+                  "controller_num_iops": "-1",
+                  "total_read_io_time_usecs": "-1",
+                  "controller_total_read_io_time_usecs": "0",
+                  "hypervisor_num_io": "-1",
+                  "controller_total_transformed_usage_bytes": "-1",
+                  "controller_num_write_io": "-1",
+                  "avg_read_io_latency_usecs": "-1",
+                  "controller_total_io_time_usecs": "0",
+                  "controller_total_read_io_size_kbytes": "0",
+                  "controller_num_seq_io": "-1",
+                  "controller_read_io_ppm": "-1",
+                  "controller_total_io_size_kbytes": "0",
+                  "controller_num_io": "0",
+                  "hypervisor_avg_read_io_latency_usecs": "-1",
+                  "num_write_iops": "1",
+                  "controller_num_random_io": "0",
+                  "num_iops": "2",
+                  "hypervisor_num_read_io": "-1",
+                  "hypervisor_total_read_io_time_usecs": "-1",
+                  "controller_avg_io_latency_usecs": "-1",
+                  "num_io": "78",
+                  "controller_num_read_io": "0",
+                  "hypervisor_num_write_io": "-1",
+                  "controller_seq_io_ppm": "-1",
+                  "controller_read_io_bandwidth_kBps": "-1",
+                  "controller_io_bandwidth_kBps": "-1",
+                  "hypervisor_timespan_usecs": "-1",
+                  "hypervisor_num_write_iops": "-1",
+                  "total_read_io_size_kbytes": "192",
+                  "hypervisor_total_io_size_kbytes": "-1",
+                  "avg_io_latency_usecs": "362",
+                  "hypervisor_num_read_iops": "-1",
+                  "controller_write_io_bandwidth_kBps": "-1",
+                  "controller_write_io_ppm": "-1",
+                  "hypervisor_avg_write_io_latency_usecs": "-1",
+                  "hypervisor_total_read_io_size_kbytes": "-1",
+                  "read_io_bandwidth_kBps": "6",
+                  "hypervisor_num_iops": "-1",
+                  "hypervisor_io_bandwidth_kBps": "-1",
+                  "controller_num_write_iops": "-1",
+                  "total_io_time_usecs": "28261",
+                  "controller_random_io_ppm": "-1",
+                  "controller_avg_read_io_size_kbytes": "-1",
+                  "total_transformed_usage_bytes": "-1",
+                  "avg_write_io_latency_usecs": "-1",
+                  "num_read_io": "21",
+                  "write_io_bandwidth_kBps": "300",
+                  "hypervisor_read_io_bandwidth_kBps": "-1",
+                  "random_io_ppm": "-1",
+                  "total_untransformed_usage_bytes": "-1",
+                  "hypervisor_total_io_time_usecs": "-1",
+                  "num_random_io": "-1",
+                  "controller_avg_write_io_size_kbytes": "-1",
+                  "controller_avg_read_io_latency_usecs": "-1",
+                  "num_write_io": "57",
+                  "total_io_size_kbytes": "9216",
+                  "io_bandwidth_kBps": "307",
+                  "controller_timespan_usecs": "0",
+                  "num_seq_io": "-1",
+                  "seq_io_ppm": "-1",
+                  "write_io_ppm": "730769",
+                  "controller_avg_write_io_latency_usecs": "-1"
+                },
+                "usage_stats": {
+                  "storage.logical_usage_bytes": "60337061888",
+                  "storage.capacity_bytes": "1509153013618",
+                  "storage.free_bytes": "1454041174541",
+                  "storage.usage_bytes": "55111839077"
+                }
+            }
+          ]
+        generate_data
