@@ -7,14 +7,15 @@ nav_order: 2
 ---
 
 
-# Installation as a package on Python 2.7
+# Installation StackState Agent V2
 
 StackState Agent 2 supports python 2.7.  StackState ETL is transpiled to python 2.7 code.
 
 From a shell on the agent machine run,
 
 ```bash 
-/opt/stackstate-agent/embedded/bin/pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/v0.1.0/stackstate-etl-py27-0.1.0.tar.gz
+sudo -H -u stackstate-agent bash -c "/opt/stackstate-agent/embedded/bin/pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/v0.0.1/stackstate-etl-py27-0.1.0.tar.gz"
+
 ```
 
 #  StackState ETL Command-line Utility

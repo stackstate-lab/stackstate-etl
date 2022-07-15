@@ -21,6 +21,8 @@ Python Code expressions.
 Python expressions are evaluated using a minimal [Python AST Evaluator](https://newville.github.io/asteval/index.html),
 while Json Path is evaluated using [jsonpath-ng](https://github.com/h2non/jsonpath-ng#jsonpath-syntax).
 
+To practice JsonPath and Python expressions used in transformation, try the [Online Evluator](https://json-path-pydash-evaluator.herokuapp.com/)
+
 # Evaluation Context
 
 StackState ETL makes available handy open-source libraies to help you with your transformations when using
