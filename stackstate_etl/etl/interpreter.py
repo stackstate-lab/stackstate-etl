@@ -266,7 +266,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
     def _get_value(self, expression: str, name: str, default: Any = None, force_eval=False) -> Any:
         if expression is None:
             return default
-        if expression.startswith("$."):
+        if isinstance(expression, string_types) and expression.startswith("$."):
             try:
                 return self.ctx.factory.jpath(expression, self.ctx.item, default)
             except (JsonPathParserError, JsonPathLexerError) as e:
@@ -274,7 +274,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
                     f"Failed to evaluate property '{name}' for '{self.source_name}' on template `{self.template_name}`."
                     f" Expression |\n {expression} \n |.\n Errors:\n {str(e)}"
                 )
-        elif expression.startswith("|") or force_eval or "\n" in expression:
+        elif isinstance(expression, string_types) and (expression.startswith("|") or force_eval or "\n" in expression):
             result = self._run_code(expression, name)
             if result is None:
                 return default

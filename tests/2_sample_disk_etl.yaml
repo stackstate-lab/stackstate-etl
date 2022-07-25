@@ -20,6 +20,7 @@ etl:
             disk_size: "$.disk_size"
             online: "$.online"
             storage_tier_name: "$.storage_tier_name"
+            int_type: 0
     health:
       - name: nutanix_disk_online_template
         spec:
