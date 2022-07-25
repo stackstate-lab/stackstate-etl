@@ -14,11 +14,13 @@ from stackstate_etl.etl.interpreter import (ComponentTemplateInterpreter,
                                             HeathTemplateInterpreter,
                                             MetricTemplateInterpreter,
                                             ProcessorInterpreter,
+                                            ProcessorTemplateInterpreter,
                                             QueryInterpreter,
                                             QueryProcessorInterpreter,
                                             TopologyContext)
 from stackstate_etl.model.etl import (ETL, ComponentTemplate, EventTemplate,
-                                      HealthTemplate, MetricTemplate, Query)
+                                      HealthTemplate, MetricTemplate,
+                                      ProcessorTemplate, Query)
 from stackstate_etl.model.factory import TopologyFactory
 from stackstate_etl.model.instance import InstanceInfo
 
@@ -27,6 +29,7 @@ class TemplateLookup:
     def __init__(self):
         self.log: Logger = logging.getLogger()
         self.component: Dict[str, ComponentTemplate] = {}
+        self.processor: Dict[str, ProcessorTemplate] = {}
         self.event: Dict[str, EventTemplate] = {}
         self.metric: Dict[str, MetricTemplate] = {}
         self.health: Dict[str, HealthTemplate] = {}
@@ -48,6 +51,7 @@ class TemplateLookup:
 
         if etl.template is not None:
             add_all("component", etl.template.components)
+            add_all("processor", etl.template.processors)
             add_all("event", etl.template.events)
             add_all("metric", etl.template.metrics)
             add_all("health", etl.template.health)
@@ -166,6 +170,9 @@ class ETLProcessor:
         template = self.template_lookup.component.get(template_ref, None)
         if template:
             return ComponentTemplateInterpreter(ctx, template, self.conf.domain, self.conf.layer, self.conf.environment)
+        template = self.template_lookup.processor.get(template_ref, None)
+        if template:
+            return ProcessorTemplateInterpreter(ctx, template, self.conf.domain, self.conf.layer, self.conf.environment)
         template = self.template_lookup.event.get(template_ref, None)
         if template:
             return EventTemplateInterpreter(ctx, template, self.conf.domain, self.conf.layer, self.conf.environment)

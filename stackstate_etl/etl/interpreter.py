@@ -19,7 +19,8 @@ from stackstate_etl.model.etl import (ComponentTemplate, ComponentTemplateSpec,
                                       DataSource, EventTemplate,
                                       EventTemplateSpec, HealthTemplate,
                                       HealthTemplateSpec, MetricTemplate,
-                                      MetricTemplateSpec, ProcessorSpec, Query)
+                                      MetricTemplateSpec, ProcessorSpec,
+                                      ProcessorTemplate, Query)
 from stackstate_etl.model.factory import TopologyFactory
 from stackstate_etl.model.instance import InstanceInfo
 from stackstate_etl.model.stackstate import (EVENT_CATEGORY_CHOICES,
@@ -204,7 +205,7 @@ class BaseTemplateInterpreter(BaseInterpreter):
     def __init__(
         self,
         ctx: TopologyContext,
-        template: Union[ComponentTemplate, EventTemplate, MetricTemplate, HealthTemplate],
+        template: Union[ComponentTemplate, ProcessorTemplate, EventTemplate, MetricTemplate, HealthTemplate],
         domain: str,
         layer: str,
         environment: str,
@@ -385,6 +386,17 @@ class ComponentTemplateInterpreter(BaseTemplateInterpreter):
         self.ctx.factory.add_component(component)
 
         return component
+
+
+class ProcessorTemplateInterpreter(BaseTemplateInterpreter):
+    def __init__(self, ctx: TopologyContext, template: ProcessorTemplate, domain: str, layer: str, environment: str):
+        BaseTemplateInterpreter.__init__(self, ctx, template, domain, layer, environment)
+
+    def interpret(self, item: Dict[str, Any]):
+        template = self.template
+        self.ctx.item = item
+        self._update_asteval_symtable()
+        self._run_code(template.code, "code")
 
 
 class MetricTemplateInterpreter(BaseTemplateInterpreter):

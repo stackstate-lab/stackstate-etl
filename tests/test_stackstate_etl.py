@@ -17,6 +17,8 @@ def test_processing_sample():
     driver = ETLDriver(conf, factory, logger)
     driver.process()
     assert len(factory.components) == 2
+    component = factory.get_component(factory.get_uid("nutanix", "host", "ed5edbbb-7428-4066-ae90-1270dcca2f37"))
+    assert "processor:label" in component.properties.labels
     assert len(factory.relations) == 1
     assert len(factory.health) == 1
     assert len(factory.metrics) == 2

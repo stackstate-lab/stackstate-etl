@@ -18,7 +18,7 @@ class Query(Model):
     name: str = StringType(required=True)
     query: str = StringType(required=True)
     processor: str = StringType(required=False)
-    template_refs: List[str] = ListType(StringType(), required=True)
+    template_refs: List[str] = ListType(StringType(), required=True, default=[])
 
 
 class ComponentTemplateSpec(Model):
@@ -41,6 +41,12 @@ class ComponentTemplate(Model):
     selector: str = StringType(default=None)
     spec = ModelType(ComponentTemplateSpec)
     code = StringType()
+
+
+class ProcessorTemplate(Model):
+    name: str = StringType(required=True)
+    selector: str = StringType(default=None)
+    code = StringType(required=True)
 
 
 class EventSourceLink(Model):
@@ -102,6 +108,7 @@ class ProcessorSpec(Model):
 
 class Template(Model):
     components: List[ComponentTemplate] = ListType(ModelType(ComponentTemplate), default=[])
+    processors: List[ProcessorTemplate] = ListType(ModelType(ProcessorTemplate), default=[])
     metrics: List[MetricTemplate] = ListType(ModelType(MetricTemplate), default=[])
     events: List[EventTemplate] = ListType(ModelType(EventTemplate), default=[])
     health: List[HealthTemplate] = ListType(ModelType(HealthTemplate), default=[])

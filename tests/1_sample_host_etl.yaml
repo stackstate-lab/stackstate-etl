@@ -4,6 +4,7 @@ etl:
       query: "|my_host_client()"
       template_refs:
         - nutanix_host_template
+        - add_label_via_processor_template
   template:
     components:
       - name: nutanix_host_template
@@ -19,6 +20,11 @@ etl:
             controller_vm_ip: "$.status.controller_vm.ip"
             hypervisor_ip: "$.status.hypervisor.ip"
             hypervisor_vm_count: "$.status.hypervisor.num_vms"
+    processors:
+      - name: add_label_via_processor_template
+        code: |
+          component = factory.get_component(uid('nutanix', 'host', item['metadata']['uuid']))
+          component.properties.add_label_kv("processor", "label")
   datasources:
     - name: my_host_client
       init: |
