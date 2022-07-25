@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Process Template
+title: Processor Template
 grand_parent: Concepts
 parent: Template
 nav_order: 7
