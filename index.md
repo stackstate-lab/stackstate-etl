@@ -20,9 +20,11 @@ implementation.
 
 ## TL;DR
 
-If you learn faster by looking at examples, refer to 
-[StackState Nutanxi Agent Check](https://github.com/stackstate-lab/sts-nutanix-agent-checks#template-mappings) for a 
-real world example of using StackState ETL.
+If you learn faster by looking at examples, refer to real world examples of using StackState ETL,
+
+- [StackState Nutanxi Agent Check](https://github.com/stackstate-lab/sts-nutanix-agent-checks#template-mappings)
+- [StackState F5 Agent Check](https://github.com/stackstate-lab/sts-f5-agent-checks#template-mappings)
+- [StackState Rancher Agent Check](https://github.com/stackstate-lab/sts-rancher-agent-checks#template-mappings)
 
 
 ## ETL Declaration
