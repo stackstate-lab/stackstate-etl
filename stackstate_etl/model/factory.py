@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from cachetools import LRUCache, cached
+from cachetools import LRUCache, keys
 from jsonpath_ng import parse
 
 from stackstate_etl.model.stackstate import (Component, Event,
@@ -18,6 +18,7 @@ class TopologyFactory:
         self.metrics: List[Metric] = []
         self.lookups: Dict[str, Any] = {}
         self.log = logging.getLogger()
+        self.jpath_cache = LRUCache(maxsize=500)
 
     def jpath(self, path: str, target: Any, default: Any = None) -> Union[Optional[Any], List[Any]]:
         jsonpath_expr = self._get_jsonpath_expr(path)
@@ -28,9 +29,13 @@ class TopologyFactory:
             return matches[0].value
         return [m.value for m in matches]
 
-    @cached(cache=LRUCache(maxsize=100))
-    def _get_jsonpath_expr(self, path: str):
-        return parse(path)
+    def _get_jsonpath_expr(self, path):
+        key = keys.hashkey(path)
+        expression = self.jpath_cache.get(key, None)
+        if expression is None:
+            expression = parse(path)
+            self.jpath_cache[key] = expression
+        return expression
 
     def add_event(self, event: Event):
         self.events.append(event)

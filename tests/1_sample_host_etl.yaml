@@ -15,6 +15,7 @@ etl:
           layer: "Nutanix Hosts"
           custom_properties:
             state: "$.status.state"
+            should_use_expression_cache: "$.status.state"
             host_type: "$.status.host_type"
             number_of_nodes: "$.num_nodes"
             controller_vm_ip: "$.status.controller_vm.ip"
