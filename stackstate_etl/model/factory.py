@@ -105,6 +105,13 @@ class TopologyFactory:
     def component_exists(self, uid: str) -> bool:
         return uid in self.components
 
+    def new_component(self) -> Component:
+        return Component()
+
+    def get_relation(self, source_id: str, target_id: str) -> Relation:
+        rel_id = f"{source_id} --> {target_id}"
+        return self.relations[rel_id]
+
     def relation_exists(self, source_id: str, target_id: str) -> bool:
         rel_id = f"{source_id} --> {target_id}"
         return rel_id in self.relations
