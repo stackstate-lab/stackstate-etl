@@ -24,6 +24,7 @@ class InstanceInfo(Model):
     domain: str = StringType(default="ETL")
     layer: str = StringType(default="ETL")
     environment: str = StringType(default="production")
+    factory_mode: str = StringType(default="Strict", choices=["Strict", "Lenient", "Ignore"])
     etl: ETL = ModelType(ETL, required=True)
 
 

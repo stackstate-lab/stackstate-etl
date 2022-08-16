@@ -8,9 +8,14 @@ from stackstate_etl.model.stackstate import (Component, Event,
                                              HealthCheckState, Metric,
                                              Relation)
 
+STRICT = "Strict"
+LENIENT = "Lenient"
+IGNORE = "Ignore"
+
 
 class TopologyFactory:
-    def __init__(self):
+    def __init__(self, mode=STRICT):
+        self.mode = mode
         self.components: Dict[str, Component] = {}
         self.relations: Dict[str, Relation] = {}
         self.health: Dict[str, HealthCheckState] = {}
@@ -66,7 +71,7 @@ class TopologyFactory:
             elif existing_component.mergeable:
                 component.merge(existing_component)
             else:
-                raise Exception(f"Component '{component.uid}' already exists. No merge flags indicated.")
+                self._handle_error(f"Component '{component.uid}' already exists. No merge flags indicated.")
 
         component.validate()
         self.components[component.uid] = component
@@ -82,10 +87,11 @@ class TopologyFactory:
             return result[0]
         elif len(result) == 0:
             if raise_not_found:
-                raise Exception(f"Component ({component_type}, {name}) not found.")
+                self._handle_error(f"Component ({component_type}, {name}) not found.")
             return None
         else:
-            raise Exception(f"More than 1 result found for Component ({component_type}, {name}) search.")
+            msg = f"More than 1 result found for Component ({component_type}, {name}) search."
+            return self._handle_multiple_results_error(msg, result)
 
     def get_component_by_name(self, name: str, raise_not_found: bool = True) -> Optional[Component]:
         result = [c for c in self.components.values() if c.get_name() == name]
@@ -93,10 +99,11 @@ class TopologyFactory:
             return result[0]
         elif len(result) == 0:
             if raise_not_found:
-                raise Exception(f"Component ({name}) not found.")
+                self._handle_error(f"Component {name} not found.")
             return None
         else:
-            raise Exception(f"More than 1 result found for Component ({name}) search.")
+            msg = f"More than 1 result found for Component {name} search."
+            return self._handle_multiple_results_error(msg, result)
 
     def get_component_by_name_postfix(self, postfix: str) -> Optional[Component]:
         result = [c for c in self.components.values() if c.get_name().endswith(postfix)]
@@ -105,12 +112,14 @@ class TopologyFactory:
         elif len(result) == 0:
             return None
         else:
-            raise Exception(f"More than 1 result found for Component postfix ({postfix}) search.")
+            msg = f"More than 1 result found for Component postfix ({postfix}) search."
+            return self._handle_multiple_results_error(msg, result)
 
     def component_exists(self, uid: str) -> bool:
         return uid in self.components
 
-    def new_component(self) -> Component:
+    @staticmethod
+    def new_component() -> Component:
         return Component()
 
     def get_relation(self, source_id: str, target_id: str) -> Relation:
@@ -124,7 +133,8 @@ class TopologyFactory:
     def add_relation(self, source_id: str, target_id: str, rel_type: str = "uses") -> Relation:
         rel_id = f"{source_id} --> {target_id}"
         if rel_id in self.relations:
-            raise Exception(f"Relation '{rel_id}' already exists.")
+            self._handle_error(f"Relation '{rel_id}' already exists.")
+            return self.relations["rel_id"]
         relation = Relation({"source_id": source_id, "target_id": target_id, "external_id": rel_id})
         relation.set_type(rel_type)
         self.relations[rel_id] = relation
@@ -132,7 +142,8 @@ class TopologyFactory:
 
     def add_health(self, health: HealthCheckState):
         if health.check_id in self.health:
-            raise Exception(f"Health event '{health.check_id}' already exists.")
+            self._handle_error(f"Health event '{health.check_id}' already exists.")
+            return
         self.health[health.check_id] = health
 
     @staticmethod
@@ -175,12 +186,31 @@ class TopologyFactory:
                             f"Failed to find related component '{resolve_id}'. "
                             f"Reference from component {source.uid}."
                         )
-                        self.log.error(msg)
-                        self.log.error("Current components known in factory:")
-                        for uid in self.components.keys():
-                            self.log.info(uid)
-                        raise Exception(msg)
+                        if self.mode == STRICT:
+                            self.log.error(msg)
+                            self.log.error("Current components known in factory:")
+                            for uid in self.components.keys():
+                                self.log.info(uid)
+                        self._handle_error(msg)
             source.relations = []
+
+    def _handle_error(self, msg):
+        if self.mode == STRICT:
+            raise Exception(msg)
+        elif self.mode == LENIENT:
+            self.log.warning(f"{msg}. Ignoring...")
+        else:
+            self.log.debug(f"{msg}. Ignoring...")
+
+    def _handle_multiple_results_error(self, msg, result) -> Any:
+        if self.mode == IGNORE:
+            self.log.debug(f"{msg}, but returning first in list '{result[0].uid}'.")
+            return result[0]
+        elif self.mode == LENIENT:
+            self.log.warning(f"{msg}, but returning first in list '{result[0].uid}'.")
+            return result[0]
+        else:
+            raise Exception(msg)
 
     @staticmethod
     def get_uid(integration: str, uid_type: str, urn_post_fix: str) -> str:

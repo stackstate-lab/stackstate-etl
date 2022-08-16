@@ -21,7 +21,7 @@ from stackstate_etl.etl.interpreter import (ComponentTemplateInterpreter,
 from stackstate_etl.model.etl import (ETL, ComponentTemplate, EventTemplate,
                                       HealthTemplate, MetricTemplate,
                                       ProcessorTemplate, Query)
-from stackstate_etl.model.factory import TopologyFactory
+from stackstate_etl.model.factory import TopologyFactory, STRICT, LENIENT
 from stackstate_etl.model.instance import InstanceInfo
 
 
@@ -77,9 +77,13 @@ class ETLDriver:
 
         unmerged_components = [c.uid for c in self.factory.components.values() if c.mergeable]
         if len(unmerged_components) > 0:
-            raise Exception(
-                "Unmerged components not allowed in factory at final processing stage." f" ${unmerged_components}"
-            )
+            msg = "Unmerged components not allowed in factory at final processing stage." f" ${unmerged_components}"
+            if self.factory.mode == STRICT:
+                raise Exception(msg)
+            elif self.factory.mode == LENIENT:
+                self.log.warning(msg)
+            else:
+                self.log.debug(msg)
         self.factory.resolve_relations()
 
     def _init_template_lookup(self) -> TemplateLookup:
