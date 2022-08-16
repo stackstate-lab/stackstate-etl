@@ -48,6 +48,18 @@ Appy by running the shell script,
 ```bash 
 ./apply_style.sh
 ```
+---
+### Syntax Highlighting
+
+#### VSCode
+
+```bash
+cp -r ./grammar/setl-vscode ~/.vscode/extensions
+```
+
+#### Intellij
+
+Import the `./grammar/setl-tmbundle`. See [Textmate Bundles](https://www.jetbrains.com/help/idea/textmate.html)
 
 ---
 ### Running in Intellij

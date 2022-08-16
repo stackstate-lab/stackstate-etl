@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string></string>
+	<key>contactName</key>
+	<string>Ravan Naidoo</string>
+	<key>description</key>
+	<string>Bundle for StackState ETL.</string>
+	<key>name</key>
+	<string>StackState ETL Bundle</string>
+	<key>uuid</key>
+	<string>24B4240E-6247-401A-B40F-3510A7A30AAE</string>
+</dict>
+</plist>

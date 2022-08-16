@@ -1,0 +1,25 @@
+{
+    "name": "setl",
+    "displayName": "SETL",
+    "description": "StackState ETL YAML",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.66.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "setl",
+            "aliases": ["StackStateETL", "setl"],
+            "extensions": [".setl", ".setl.yaml"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "setl",
+            "scopeName": "source.setl",
+            "path": "./syntaxes/setl.tmLanguage.json"
+        }]
+    }
+}
