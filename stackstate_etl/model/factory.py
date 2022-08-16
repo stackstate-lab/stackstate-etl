@@ -160,15 +160,19 @@ class TopologyFactory:
         components: List[Component] = self.components.values()
         for source in components:
             for relation in source.relations:
-                if self.component_exists(relation.target_id):
+                resolve_id = relation.target_id
+                if source.uid == resolve_id:
+                    # There was a reverse relation '<' indicator
+                    resolve_id = relation.source_id
+                if self.component_exists(resolve_id):
                     self.add_relation(relation.source_id, relation.target_id, relation.get_type())
                 else:
-                    target_component = self.get_component_by_name(relation.target_id, raise_not_found=False)
+                    target_component = self.get_component_by_name(resolve_id, raise_not_found=False)
                     if target_component:
                         self.add_relation(relation.source_id, target_component.uid, relation.get_type())
                     else:
                         msg = (
-                            f"Failed to find related component '{relation.target_id}'. "
+                            f"Failed to find related component '{resolve_id}'. "
                             f"Reference from component {source.uid}."
                         )
                         self.log.error(msg)

@@ -65,7 +65,7 @@ etl:
                 "cluster_uuid": "0005e14c-38be-141f-671c-ac1f6b3b4ac8",
                 "storage_tier_name": "SSD",
                 "service_vmid": "0005e14c-38be-141f-671c-ac1f6b3b4ac8::8",
-                "node_uuid": "da249120-a63b-4050-990a-2d00b4cb1255",
+                "node_uuid": "ed5edbbb-7428-4066-ae90-1270dcca2f37",
                 "last_service_vmid": None,
                 "last_node_uuid": None,
                 "host_name": "10.55.90.27",
