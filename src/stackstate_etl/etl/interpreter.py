@@ -12,20 +12,20 @@ from six import string_types
 
 try:
     import networkx
-except ModuleNotFoundError:
+except ImportError:
     networkx = None
 try:
     import pandas
-except ModuleNotFoundError:
+except ImportError:
     pandas = None
 try:
     import pendulum
-except ModuleNotFoundError:
+except ImportError:
     pendulum = None
 try:
     import pydash
     from pydash import py_
-except ModuleNotFoundError:
+except ImportError:
     pydash = None
     py_ = None
 
