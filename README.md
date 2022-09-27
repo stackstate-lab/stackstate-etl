@@ -46,7 +46,6 @@ The `pdm install` command sets up all the projects required dependencies using [
 - [Flakehell](https://flakehell.readthedocs.io/) for linting
 - [mypy](https://mypy.readthedocs.io/en/stable/) for static type checking
 
-Appy by running
 ```bash
 pdm format
 ```
@@ -67,39 +66,6 @@ pdm build
 ```
 
 ---
-
-## Development
-
-StackState ETL is developed in Python 3, and is transpiled to Python 2.7 during build.
-
-### Prerequisites:
-
-- Python v.3.7+. See [Python installation guide](https://docs.python-guide.org/starting/installation/)
-- [Poetry](https://python-poetry.org/docs/#installation)
-
-### Setup local code repository
-
-```bash 
-git clone git@github.com:stackstate-lab/stackstate-etl.git
-cd stackstate-etl
-poetry install 
-```
-
-The poetry install command creates a virtual environment and downloads the required dependencies.
-
-### Styling and Linting
-
-- [Black](https://black.readthedocs.io/en/stable/) for formatting
-- [isort](https://pycqa.github.io/isort/) to sort imports
-- [Flakehell](https://flakehell.readthedocs.io/) for linting
-- [mypy](https://mypy.readthedocs.io/en/stable/) for static type checking
-
-Appy by running the shell script,
-
-```bash 
-./apply_style.sh
-```
----
 ### Syntax Highlighting
 
 #### VSCode
@@ -113,7 +79,3 @@ cp -r ./grammar/setl-vscode ~/.vscode/extensions
 Import the `./grammar/setl-tmbundle`. See [Textmate Bundles](https://www.jetbrains.com/help/idea/textmate.html)
 
 ---
-### Running in Intellij
-
-Setup the module sdk to point to the virtual python environment created by Poetry.
-Default on macos is `~/Library/Caches/pypoetry/virtualenvs`
