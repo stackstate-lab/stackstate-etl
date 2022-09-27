@@ -6,7 +6,7 @@ authors = [
     {name = "Ravan Naidoo", email = "rnaidoo@stackstate.com"},
 ]
 
-requires-python = "==3.9"
+requires-python = ">=3.9,<3.10"
 license = {text = "MIT"}
 
 #######################################################################################################################
