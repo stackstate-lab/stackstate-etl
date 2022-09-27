@@ -10,3 +10,5 @@ _pycache__/
 .python-version
 .mypy_cache/
 
+/.pdm.toml
+/__pypackages__/

@@ -1,8 +1,14 @@
 from typing import Any, Dict, List, Union
 
 from schematics import Model
-from schematics.types import (BooleanType, DictType, ListType, ModelType,
-                              StringType, UnionType)
+from schematics.types import (
+    BooleanType,
+    DictType,
+    ListType,
+    ModelType,
+    StringType,
+    UnionType,
+)
 
 from stackstate_etl.model.stackstate import EVENT_CATEGORY_CHOICES, AnyType
 

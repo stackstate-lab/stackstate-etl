@@ -4,9 +4,13 @@ from typing import Any, Dict, List, Optional, Union
 from cachetools import LRUCache, keys
 from jsonpath_ng import parse
 
-from stackstate_etl.model.stackstate import (Component, Event,
-                                             HealthCheckState, Metric,
-                                             Relation)
+from stackstate_etl.model.stackstate import (
+    Component,
+    Event,
+    HealthCheckState,
+    Metric,
+    Relation,
+)
 
 STRICT = "Strict"
 LENIENT = "Lenient"

@@ -9,13 +9,22 @@ from urllib.parse import quote
 import requests
 
 from stackstate_etl.model.instance import StackStateSpec
-from stackstate_etl.model.stackstate import (Component, Event,
-                                             HealthCheckState, Metric,
-                                             Relation)
-from stackstate_etl.model.stackstate_receiver import (HealthStream, HealthSync,
-                                                      HealthSyncStartSnapshot,
-                                                      Instance, ReceiverApi,
-                                                      SyncStats, TopologySync)
+from stackstate_etl.model.stackstate import (
+    Component,
+    Event,
+    HealthCheckState,
+    Metric,
+    Relation,
+)
+from stackstate_etl.model.stackstate_receiver import (
+    HealthStream,
+    HealthSync,
+    HealthSyncStartSnapshot,
+    Instance,
+    ReceiverApi,
+    SyncStats,
+    TopologySync,
+)
 
 
 class StackStateClient:

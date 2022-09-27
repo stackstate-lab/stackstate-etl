@@ -4,7 +4,7 @@ from stackstate_etl.etl.etl_driver import ETLDriver
 from stackstate_etl.model.factory import TopologyFactory
 from stackstate_etl.model.instance import CliConfiguration
 from stackstate_etl.model.stackstate_receiver import SyncStats
-from stackstate_etl.stackstate import StackStateClient
+from stackstate_etl.stackstate.client import StackStateClient
 
 
 class CliProcessor:

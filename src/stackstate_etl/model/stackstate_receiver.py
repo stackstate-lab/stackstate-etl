@@ -3,12 +3,23 @@ from typing import Any, Dict, List
 
 from schematics import Model
 from schematics.transforms import blacklist, wholelist
-from schematics.types import (BooleanType, DictType, IntType, ListType,
-                              ModelType, StringType)
+from schematics.types import (
+    BooleanType,
+    DictType,
+    IntType,
+    ListType,
+    ModelType,
+    StringType,
+)
 
-from stackstate_etl.model.stackstate import (AnyType, Component, Event,
-                                             HealthCheckState, Relation,
-                                             TimestampType)
+from stackstate_etl.model.stackstate import (
+    AnyType,
+    Component,
+    Event,
+    HealthCheckState,
+    Relation,
+    TimestampType,
+)
 
 
 class Instance(Model):

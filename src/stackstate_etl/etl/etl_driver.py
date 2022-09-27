@@ -8,20 +8,28 @@ from typing import Any, Dict, List
 import yaml
 from importlib_resources import files
 
-from stackstate_etl.etl.interpreter import (ComponentTemplateInterpreter,
-                                            DataSourceInterpreter,
-                                            EventTemplateInterpreter,
-                                            HeathTemplateInterpreter,
-                                            MetricTemplateInterpreter,
-                                            ProcessorInterpreter,
-                                            ProcessorTemplateInterpreter,
-                                            QueryInterpreter,
-                                            QueryProcessorInterpreter,
-                                            TopologyContext)
-from stackstate_etl.model.etl import (ETL, ComponentTemplate, EventTemplate,
-                                      HealthTemplate, MetricTemplate,
-                                      ProcessorTemplate, Query)
-from stackstate_etl.model.factory import TopologyFactory, STRICT, LENIENT
+from stackstate_etl.etl.interpreter import (
+    ComponentTemplateInterpreter,
+    DataSourceInterpreter,
+    EventTemplateInterpreter,
+    HeathTemplateInterpreter,
+    MetricTemplateInterpreter,
+    ProcessorInterpreter,
+    ProcessorTemplateInterpreter,
+    QueryInterpreter,
+    QueryProcessorInterpreter,
+    TopologyContext,
+)
+from stackstate_etl.model.etl import (
+    ETL,
+    ComponentTemplate,
+    EventTemplate,
+    HealthTemplate,
+    MetricTemplate,
+    ProcessorTemplate,
+    Query,
+)
+from stackstate_etl.model.factory import LENIENT, STRICT, TopologyFactory
 from stackstate_etl.model.instance import InstanceInfo
 
 
@@ -102,7 +110,7 @@ class ETLDriver:
 
     def _load_ref(self, etl_ref: str) -> List[ETL]:
         if etl_ref.startswith("module_dir://"):
-            yaml_files = sorted(files(etl_ref[13:]).glob("*.yaml"))
+            yaml_files = sorted(files(etl_ref[13:]).glob("*.yaml"))  # type: ignore
         elif etl_ref.startswith("module_file://"):
             yaml_files = [files(etl_ref[14:])]
         elif etl_ref.startswith("file://"):
@@ -118,7 +126,7 @@ class ETLDriver:
         results = []
         for yaml_file in yaml_files:
             with open(str(yaml_file)) as f:
-                etl_data = yaml.load(f)
+                etl_data = yaml.safe_load(f)
             etl_model = ETL(etl_data["etl"])
             etl_model.source = str(yaml_file)
             etl_model.validate()

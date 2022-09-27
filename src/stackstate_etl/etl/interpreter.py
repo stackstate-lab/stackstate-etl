@@ -4,30 +4,58 @@ import re
 from typing import Any, Dict, List, Optional, Union
 
 import attr
-import networkx
-import pandas
-import pendulum
-import pydash
 import pytz
 import requests
 from asteval import Interpreter
 from jsonpath_ng.exceptions import JsonPathLexerError, JsonPathParserError
-from pydash import py_
 from six import string_types
 
-from stackstate_etl.model.etl import (ComponentTemplate, ComponentTemplateSpec,
-                                      DataSource, EventTemplate,
-                                      EventTemplateSpec, HealthTemplate,
-                                      HealthTemplateSpec, MetricTemplate,
-                                      MetricTemplateSpec, ProcessorSpec,
-                                      ProcessorTemplate, Query)
+try:
+    import networkx
+except ModuleNotFoundError:
+    networkx = None
+try:
+    import pandas
+except ModuleNotFoundError:
+    pandas = None
+try:
+    import pendulum
+except ModuleNotFoundError:
+    pendulum = None
+try:
+    import pydash
+    from pydash import py_
+except ModuleNotFoundError:
+    pydash = None
+    py_ = None
+
+
+from stackstate_etl.model.etl import (
+    ComponentTemplate,
+    ComponentTemplateSpec,
+    DataSource,
+    EventTemplate,
+    EventTemplateSpec,
+    HealthTemplate,
+    HealthTemplateSpec,
+    MetricTemplate,
+    MetricTemplateSpec,
+    ProcessorSpec,
+    ProcessorTemplate,
+    Query,
+)
 from stackstate_etl.model.factory import TopologyFactory
 from stackstate_etl.model.instance import InstanceInfo
-from stackstate_etl.model.stackstate import (EVENT_CATEGORY_CHOICES,
-                                             HEALTH_STATE_CHOICES,
-                                             METRIC_TYPE_CHOICES, Component,
-                                             Event, HealthCheckState, Metric,
-                                             SourceLink)
+from stackstate_etl.model.stackstate import (
+    EVENT_CATEGORY_CHOICES,
+    HEALTH_STATE_CHOICES,
+    METRIC_TYPE_CHOICES,
+    Component,
+    Event,
+    HealthCheckState,
+    Metric,
+    SourceLink,
+)
 
 
 @attr.s(kw_only=True)
