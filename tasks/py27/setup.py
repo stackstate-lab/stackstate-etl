@@ -22,6 +22,8 @@ install_requires = [
     'requests==2.25.0',
     'schematics>=2.1.1,<3.0.0',
     'six>=1.16.0,<2.0.0',
+    'networkx==2.2',
+    'pendulum>=2.1.2,<2.2.0'
 ]
 setup_kwargs = {
    'name': 'stackstate-etl',
