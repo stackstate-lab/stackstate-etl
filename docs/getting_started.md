@@ -14,7 +14,7 @@ StackState Agent 2 supports python 2.7.  StackState ETL is transpiled to python 
 From a shell on the agent machine run,
 
 ```bash 
-sudo -H -u stackstate-agent bash -c "/opt/stackstate-agent/embedded/bin/pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/v0.0.1/stackstate-etl-py27-0.1.0.tar.gz"
+sudo -H -u stackstate-agent bash -c "/opt/stackstate-agent/embedded/bin/pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/v0.2.0/stackstate-etl-py27-0.2.0.tar.gz"
 
 ```
 
@@ -36,7 +36,7 @@ $ source venv/bin/activate
 Now install the `stsetl` utility.
 
 ```bash
-pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/0.1.0/stackstate-etl-0.1.0.tar.gz
+pip install https://github.com/stackstate-lab/stackstate-etl/releases/download/0.2.0/stackstate-etl-0.2.0.tar.gz
 ```
 
 The `stsetl` command-line utility reads ETL yaml files specified in the `conf.yaml` and sends the resulting 4T elements
