@@ -6,8 +6,37 @@ nav_exclude: false
 nav_order: 2
 ---
 
+# Run Yo Code
 
-# Installation StackState Agent V2
+The [stackstate-lab](https://github.com/stackstate-lab/generator-stackstate-lab) [Yeoman](http://yeoman.io) generator can
+scaffold a new StackState Agent Check project using the [StackState ETL Framework](https://github.com/stackstate-etl/).
+The Yeoman generator will walk you through the steps required to create your project prompting for the required information.
+
+To launch the generator simply type:
+
+```bash
+yo stackstate-lab --useEtlFramework 
+```
+
+## StackState Agent Check Project 
+
+The generated project uses [PDM](https://pdm.fming.dev/) for Python package and dependency management which 
+supports the latest PEP standards. Especially [PEP 582 support](https://www.python.org/dev/peps/pep-0582), no virtualenv involved at all.
+[PDM Scripts](https://pdm.fming.dev/latest/usage/scripts/) drive the development life-cycle of the project.
+
+| Command        | Description                                                                                                                |
+|----------------|----------------------------------------------------------------------------------------------------------------------------|
+| pdm install    | Installs package and setups up PEP 582 environment                                                                         |
+| pdm test       | Runs unit tests                                                                                                            |
+| pdm format     | Code styling and linting performed by Black, FlakeHell and MyPy                                                            |
+| pdm build      | Will transpile the custom agent check to Python 2.7 and create install zip                                                 |
+| pdm cleanAgent | Remove the custom StackState Agent Docker image used during development                                                    |
+| pdm buildAgent | Build a custom [StackState Agent Docker](https://hub.docker.com/r/stackstate/stackstate-agent-2) to use during development |
+| pdm check      | Dry-run custom agent check inside the StackState Agent container                                                           |
+| pdm serve      | Starts the StackState Agent in the foreground using the configuration `src/data/conf.d/` directory                         |
+
+
+# Installation on StackState Agent V2
 
 StackState Agent 2 supports python 2.7.  StackState ETL is transpiled to python 2.7 code.
 
