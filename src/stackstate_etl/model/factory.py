@@ -138,7 +138,7 @@ class TopologyFactory:
         rel_id = f"{source_id} --> {target_id}"
         if rel_id in self.relations:
             self._handle_error(f"Relation '{rel_id}' already exists.")
-            return self.relations["rel_id"]
+            return self.relations[rel_id]
         relation = Relation({"source_id": source_id, "target_id": target_id, "external_id": rel_id})
         relation.set_type(rel_type)
         self.relations[rel_id] = relation
